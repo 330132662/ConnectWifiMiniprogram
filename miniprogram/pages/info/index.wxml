@@ -7,7 +7,6 @@
       <view class="section-form-item start" style="margin-bottom: 50rpx">
         <view class="section-form-item-left">
           <view class="section-form-item-left-text">微信头像</view>
-          <!-- <button open-type="chooseAvatar" bindchooseavatar="avatarChoosed" >选择头像</button> -->
         </view>
         <view class="section-form-item-right">
           <view wx:if="{{form.avatar}}" class="section-form-item-right-image">

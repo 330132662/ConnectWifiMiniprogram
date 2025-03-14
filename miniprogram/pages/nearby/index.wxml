@@ -63,7 +63,7 @@
           <view class="item-right-top">
             <view class="item-right-name">{{item.name}}</view>
             <view class="item-right-meter" catch:tap="handle2Locate" data-item="{{item}}">
-             距您{{utils.intval(item.distance)}}
+              {{utils.intval(item.distance)}}
             </view>
           </view>
           <view wx:if="{{item.tags && item.tags.length}}" class="item-right-m">
