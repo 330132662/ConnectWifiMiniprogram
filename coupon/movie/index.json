@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "热门电影",
+  "usingComponents": {
+    "hot-movie": "plugin-private://wx89752980e795bfde/components/hot-movie/hot-movie"
+  }
+}

@@ -1,0 +1,16 @@
+<wxs src="./index.wxs" module="utils" />
+<view class="box">
+  <x-icon wx:if="{{type == 'info'}}" x-class="box-icon" name="warning" size="300" color="#ccc"></x-icon>
+  <x-icon wx:elif="{{type == 'success'}}" x-class="box-icon" name="success-o" size="300" color="#ccc"></x-icon>
+  <view class="box-text">{{tip || '未知错误，请点击右上角重新刷新小程序'}}</view>
+</view>
+<view class="bottom">
+  <x-auth-btn bind:click="handleClick" mobile x-class="bottom-btn" style="{{utils.bg(custom.color)}}">
+    确定
+  </x-auth-btn>
+</view>
+<view wx:if="{{userInfo && custom.copyright_type == 'text' || custom.copyright_type == 'image'}}" class="copyright">
+  <x-divider type="{{custom.copyright_type}}" desc="{{custom.copyright_text}}" url="{{custom.copyright_url}}">
+    <image class="copyright-content" src="{{custom.copyright_image}}" mode="aspectFit"></image>
+  </x-divider>
+</view>

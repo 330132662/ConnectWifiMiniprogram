@@ -1,0 +1,34 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<view class="list">
+  <block wx:for="{{list}}">
+    <x-auth-btn style="width:100%" x-class="item" wx:key="index" data-item="{{item}}" bind:click="handleWifiClick">
+      <view wx:if="{{item.form_logo}}" class="item-left">
+        <x-image x-class="item-left-image"></x-image>
+      </view>
+      <view wx:else class="item-left icon" style="{{utils.bg(custom.color)}}">
+        <x-icon class="item-left-icon" name="wifi" size="60"></x-icon>
+      </view>
+      <view class="item-m">
+        <view class="item-m-title">{{item.ssid}}</view>
+        <view class="item-m-desc">
+          <view class="item-m-desc-text label">WiFi密码:</view>
+          <view wx:if="{{item.password}}" class="item-m-desc-text text">{{item.password}}</view>
+          <view wx:else class="item-m-desc-text text" style="color: #aaa;">未设置密码</view>
+        </view>
+      </view>
+      <view class="item-right">
+        <x-icon class="item-right-icon" name="arrow-right"></x-icon>
+      </view>
+    </x-auth-btn>
+    <!-- <view wx:if="{{(index) % 10 == 0}}" class="ad-center">
+      <ad wx:if="{{custom.form_ad.ad_banner_active && custom.form_ad.ad_banner}}" unit-id="{{custom.form_ad.ad_banner}}"></ad>
+    </view> -->
+  </block>
+  <view wx:if="{{loading}}" class="loading">
+    <van-loading type="spinner"></van-loading>
+  </view>
+  <view wx:elif="{{!list || !list.length}}" class="empty">
+    <van-empty description="附近暂无可连接的WiFi"></van-empty>
+  </view>
+</view>

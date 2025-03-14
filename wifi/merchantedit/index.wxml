@@ -1,0 +1,92 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || fullLoading}}"></x-loading>
+<view class="section">
+  <view class="section-title">
+    <view class="section-title-text">基础设置</view>
+  </view>
+  <view class="section-form">
+    <view class="section-item start">
+      <view class="section-item-left">门店Logo</view>
+      <view class="section-item-right">
+        <view wx:if="{{merchant.logo}}" class="section-item-upload">
+          <image class="section-item-upload-image" src="{{merchant.logo}}" mode="aspectFill"></image>
+          <view data-name="logo" bind:tap="handleDeleteImage" class="section-item-upload-tag">
+            <x-icon name="delete" size="30" color="#eee" bold></x-icon>
+          </view>
+        </view>
+        <view wx:else class="section-item-upload add" data-name="logo" bind:tap="handleUpload">
+          <van-loading wx:if="{{disabled}}" type="spinner"></van-loading>
+          <x-icon wx:else x-class="form-item-upload-icon" name="xiangji" size="60" color="#bbb"></x-icon>
+        </view>
+      </view>
+    </view>
+    <view class="section-item">
+      <view class="section-item-left">门店分类</view>
+      <view wx:if="{{merchant.gid}}" class="section-item-right line" bind:tap="handleShowGroupPopup">
+        <view class="section-item-right-text">{{merchant.group.name}}</view>
+        <x-icon class="section-item-right-icon" name="arrow-right" color="#555"></x-icon>
+      </view>
+      <view wx:else class="section-item-right line" bind:tap="handleShowGroupPopup">
+        <view class="section-item-right-text empty">点击选择门店分类</view>
+        <x-icon class="section-item-right-icon" name="arrow-right" color="#bbb"></x-icon>
+      </view>
+    </view>
+    <view class="section-item ">
+      <view class="section-item-left">门店地址</view>
+      <view class="section-item-right flex">
+        <input type="text" wx:if="{{!merchant.address || !merchant.longitude || !merchant.latitude}}" catch:tap="handleSelectLocation" disabled class="section-item-input" placeholder="点击绑定当前位置" placeholder-class="section-item-placeholder" value="{{merchant.address}}"></input>
+        <input type="text" wx:else data-name="address" bind:input="onInputChange" class="section-item-input" placeholder="请输入门店的详细地址" placeholder-class="section-item-input placeholder" value="{{merchant.address}}"></input>
+        <view class="section-item-right-right" data-name="address" wx:if="{{merchant.address}}" catch:tap="onClearClick">
+          <x-icon class="section-item-right-icon" name="clear" size="32" color="#bbb"></x-icon>
+        </view>
+        <view wx:else class="section-item-right-right" bind:tap="handleSelectLocation" data-name="address">
+          <x-icon class="section-item-right-icon" name="locate" size="32" color="#888"></x-icon>
+        </view>
+      </view>
+    </view>
+    <view class="section-item ">
+      <view class="section-item-left">门店名称</view>
+      <view class="section-item-right">
+        <input type="text" cursor-spacing="50" always-embed data-name="name" bindinput="onInputChange" class="section-item-right-input" placeholder="请输入门店名称" value="{{merchant.name}}"></input>
+      </view>
+    </view>
+    <view class="section-item ">
+      <view class="section-item-left">营业备注</view>
+      <view class="section-item-right">
+        <input type="text" cursor-spacing="50" always-embed data-name="remark" bindinput="onInputChange" class="section-item-right-input" placeholder="如：营业时间、联系方式" value="{{merchant.remark}}"></input>
+      </view>
+    </view>
+    <!-- <view class="section-item start" style="padding-bottom:10rpx;display:none">
+      <view class="section-item-left">门店描述</view>
+      <view class="section-item-right textarea">
+        <textarea maxlength="-1" disable-default-padding auto-height cursor-spacing="50" always-embed data-name="desc" bindinput="onInputChange" class="section-item-right-textarea" placeholder="请输入门店描述" value="{{merchant.desc}}"></textarea>
+      </view>
+    </view> -->
+  </view>
+</view>
+<view class="section" wx:if="{{merchant.id}}">
+  <view class="section-title">
+    <view class="section-title-text">其他设置</view>
+  </view>
+  <view class="section-form">
+    <view class="section-item" bind:tap="handle2Coupon">
+      <view class="section-item-left">优惠券设置</view>
+      <view class="section-item-right line">
+        <view class="section-item-right-text"></view>
+        <x-icon class="section-item-right-icon" name="arrow-right" color="#bbb"></x-icon>
+      </view>
+    </view>
+    <view class="section-item" bind:tap="handle2Carousel">
+      <view class="section-item-left">轮播图设置</view>
+      <view class="section-item-right line">
+        <view class="section-item-right-text"></view>
+        <x-icon class="section-item-right-icon" name="arrow-right" color="#bbb"></x-icon>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="bottom">
+  <view bind:tap="handleConfirm" class="bottom-btn" style="{{utils.bg(custom.color)}}">立即保存</view>
+</view>
+<!-- 选择门店分类 -->
+<x-popup show="{{groupPopupShow}}" bind:change="onGroupPopupSelect" bind:close="onGroupPopupClose"></x-popup>

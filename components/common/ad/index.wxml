@@ -1,0 +1,14 @@
+<view class="ad x-class">
+  <block wx:if="{{type == 'banner'}}">
+    <ad wx:if="{{!adMove}}" class="x-class" unit-id="{{unitId}}" ad-intervals="30" bindload="onAdLoad" binderror="onAdError" bindclose="onAdClose"></ad>
+    <view wx:else class="empty">
+      <view class="empty-text">广告加载失败</view>
+    </view>
+  </block>
+  <block wx:elif="{{type == 'video'}}">
+    <ad wx:if="{{!adMove}}" class="x-class" ad-type="video" ad-theme="white" unit-id="{{unitId}}" ad-intervals="30" bindload="onAdLoad" binderror="onAdError" bindclose="onAdClose"></ad>
+    <view wx:else class="empty">
+      <view class="empty-text">广告加载失败</view>
+    </view>
+  </block>
+</view>

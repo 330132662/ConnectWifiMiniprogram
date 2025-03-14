@@ -1,0 +1,132 @@
+@import "../../assets/styles/index.scss";
+@import "../../assets/styles/animate.scss";
+
+$topHeight: calc(750rpx * 9 / 16);
+page {
+  padding-bottom: 120rpx;
+  padding-bottom: calc(
+    constant(safe-area-inset-bottom) + 120rpx
+  ); /*兼容 IOS<11.2*/
+  padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx); /*兼容 IOS>11.2*/
+  background: $bg-color;
+}
+.top {
+  min-height: $topHeight;
+  &-video {
+    width: 100%;
+    height: 100%;
+  }
+}
+.swiper {
+  height: 100%;
+  &-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.empty {
+      background: #f3f3f3;
+    }
+    &-banner {
+      width: 100%;
+      height: 100%;
+      &-image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &-empty {
+      color: #bbb;
+    }
+  }
+}
+.list {
+  position: relative;
+  padding: 30rpx 30rpx;
+  padding-top: 50rpx;
+}
+$sectionSize: 120rpx;
+.section {
+  padding: 25rpx 20rpx;
+  background: #fff;
+  margin-bottom: 30rpx;
+  box-shadow: 0 5rpx 20rpx #e9e9e9;
+  display: flex;
+  align-items: center;
+  border-radius: 20rpx;
+  &:active {
+    opacity: 0.8;
+  }
+  &-left {
+    flex-shrink: 0;
+    width: $sectionSize;
+    height: $sectionSize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15rpx;
+    &-image,
+    &-icon {
+      width: $sectionSize - 10;
+      height: $sectionSize - 10;
+      border-radius: 8rpx;
+      overflow: hidden;
+    }
+
+    &-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    &-content {
+      flex: 1;
+      height: $sectionSize;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      &-title {
+        font-size: 40rpx;
+        color: #222;
+        font-weight: bold;
+        letter-spacing: 2rpx;
+        @include ellipsis();
+      }
+      &-desc {
+        font-size: 27rpx;
+        color: #777;
+        @include ellipsis();
+      }
+    }
+    &-icon {
+      width: 60rpx;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: -15rpx;
+      margin-top: 10rpx;
+    }
+  }
+}
+
+.copyright {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40rpx;
+  padding-bottom: 60rpx;
+  padding-top: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  &-content {
+    height: 50rpx;
+  }
+}

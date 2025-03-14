@@ -1,0 +1,112 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading white wx:if="{{customLoading}}" />
+<x-poster style="position:fixed;left: -9999px;" id="poster" bind:success="onPosterSuccess" bind:fail="onPosterFail"></x-poster>
+<x-picker-color wx:if="{{currentColor}}" initColor="{{currentColor}}" host="{{host}}" show="{{showPickerColor}}" bind:confirm="onPickerColorConfirm" />
+<view class="page">
+  <view class="poster">
+    <image bind:tap="handlePosterItemClick" class="poster-image" src="{{posterSrc}}" mode="widthFit"></image>
+  </view>
+  <view class="m">
+    <view class="m-tip">用户扫码可入驻成为拓展商/商家</view>
+  </view>
+  <view class="bottom" wx:if="{{custom}}">
+    <view class="bottom-wrapper">
+      <x-auth-btn x-class="bottom-item" writePhotosAlbum bind:click="handleSaveImage">
+        <view class="bottom-item">
+          <view class="bottom-item-icon">
+            <x-image x-class="bottom-item-icon__icon" src="{{custom.form_icon.bctp || custom.host + '/static/wifi/image/icon_material.png'}}" fit="aspectFill"></x-image>
+          </view>
+          <view class="bottom-item-name">保存图片</view>
+        </view>
+      </x-auth-btn>
+      <x-auth-btn x-class="bottom-item" bind:click="handleTextChange">
+        <view class="bottom-item-icon">
+          <x-image x-class="bottom-item-icon__icon" src="{{custom.form_icon.waxg || custom.host + '/static/wifi/image/icon_info.png'}}" fit="aspectFill"></x-image>
+        </view>
+        <view class="bottom-item-name">文案修改</view>
+      </x-auth-btn>
+      <x-auth-btn x-class="bottom-item" bind:click="handleShowMiniPopup">
+        <view class="bottom-item-icon">
+          <x-image x-class="bottom-item-icon__icon" src="{{custom.form_icon.xcxlj || custom.host + '/static/wifi/image/icon_mini.png'}}" fit="aspectFill"></x-image>
+        </view>
+        <view class="bottom-item-name">小程序路径</view>
+      </x-auth-btn>
+    </view>
+  </view>
+  <x-divider class="copyright" type="{{custom.copyright_type}}" desc="{{custom.copyright_text}}" url="{{custom.copyright_url}}">
+    <image class="copyright-content" src="{{custom.copyright_image}}" mode="aspectFit"></image>
+  </x-divider>
+</view>
+<van-popup closeable custom-class="popup" round show="{{ showPopup }}" position="bottom" custom-style="max-height: 780rpx;" bind:close="onPopupClose">
+  <view class="popup-head">
+    <view class="popup-head-title">文案修改</view>
+  </view>
+  <scroll-view class="popup-content" scroll-y enable-flex>
+    <view class="form">
+      <view class="form-item">
+        <view class="form-item-label">第1行：</view>
+        <view class="form-item-content">
+          <input type="text" cursor-spacing="50" always-embed data-name="line_1" bindinput="onInputChange" class="form-item-input" placeholder="连WiFi 赚大钱" placeholder-class="form-item-placeholder" value="{{form.line_1}}"></input>
+          <view class="form-item-right" wx:if="{{form.line_1}}" data-name="line_1" bind:tap="onClearClick">
+            <x-icon x-class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+          </view>
+        </view>
+      </view>
+      <view class="form-item">
+        <view class="form-item-label">第2行：</view>
+        <view class="form-item-content">
+          <input type="text" cursor-spacing="50" always-embed data-name="line_2" bindinput="onInputChange" class="form-item-input" placeholder="分销拓客 · 赚取佣金 · 连接流量" placeholder-class="form-item-placeholder" value="{{form.line_2}}"></input>
+          <view class="form-item-right" wx:if="{{form.line_2}}" data-name="line_2" bind:tap="onClearClick">
+            <x-icon class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+          </view>
+        </view>
+      </view>
+      <view class="form-item">
+        <view class="form-item-label">第3行：</view>
+        <view class="form-item-content">
+          <input type="text" cursor-spacing="50" always-embed data-name="line_3" bindinput="onInputChange" class="form-item-input" placeholder="每一次连接都有「钱」" placeholder-class="form-item-placeholder" value="{{form.line_3}}"></input>
+          <view class="form-item-right" wx:if="{{form.line_3}}" data-name="line_3" bind:tap="onClearClick">
+            <x-icon x-class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+          </view>
+        </view>
+      </view>
+      <view class="form-item">
+        <view class="form-item-label">第4行：</view>
+        <view class="form-item-content">
+          <input type="text" cursor-spacing="50" always-embed data-name="line_4" bindinput="onInputChange" class="form-item-input" placeholder="加入我们，扫一扫，连WiFi赚大钱" placeholder-class="form-item-placeholder" value="{{form.line_4}}"></input>
+          <view class="form-item-right" wx:if="{{form.line_4}}" data-name="line_4" bind:tap="onClearClick">
+            <x-icon class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="popup-bottom">
+      <view bind:tap="handlePopupConfirm" class="popup-bottom-btn" style="{{utils.bg(custom.color)}}">
+        立即更新海报
+      </view>
+    </view>
+  </scroll-view>
+</van-popup>
+<view class="mini" wx:if="{{showMiniPopup}}">
+  <view class="mini-title">小程序路径使用说明</view>
+  <view class="mini-content">
+    <view class="mini-item mb">
+      <view class="mini-item-head">1. 配置公众号自定义菜单</view>
+      <view class="mini-item-content">
+        适用于微信公众号菜单连WiFi的场景，粉丝可以通过点击公众号菜单进行WiFi连接，满足粉丝日常连WiFi的需求;
+      </view>
+    </view>
+    <view class="mini-item">
+      <view class="mini-item-head">2. 关注公众号自动回复连WiFi</view>
+      <view class="mini-item-content">
+        适用于认证服务号、认证订阅号，粉丝通过扫码关注公众号后启动自动回复功能连接WiFi，如线下已印刷有二维码推荐开启自动回复连WiFi，并配合公众号菜单连WiFi一起使用;
+      </view>
+    </view>
+  </view>
+  <view class="mini-bottom" bind:tap="handleConfirmCopy">
+    <view class="mini-bottom-btn" style="{{custom.color ? 'background:'+custom.color : ''}}">
+      看懂了，点击复制内容
+    </view>
+  </view>
+</view>
+<view class="mini-mask" wx:if="{{showMiniPopup}}" bind:tap="handleCloseMiniPopup"></view>

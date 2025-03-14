@@ -1,0 +1,49 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || loading}}"></x-loading>
+<view class="list">
+  <view class="item" wx:for="{{list}}" wx:key="index">
+    <view class="item-wrapper">
+      <view class="item-bg"></view>
+      <view class="item-left">
+        <view class="item-left-name">{{item.name}}</view>
+        <view class="item-left-desc">{{item.desc}}</view>
+        <view class="item-left-bottom">
+          <view class="item-left-bottom-get">
+            领取时间：{{utils.getCouponTime(item.get_active, item.get_begin,item.get_end,'领取')}}
+          </view>
+          <view class="item-left-bottom-use">
+            使用时间：{{utils.getCouponTime(item.use_active, item.use_begin,item.use_end,'使用')}}
+          </view>
+        </view>
+      </view>
+      <view class="item-right">
+        <view wx:if="{{item.limit > 0}}" class="item-right-tip">每人限领{{item.limit}}次</view>
+        <view wx:else class="item-right-tip">不限制领取次数</view>
+        <view class="item-right-tip">累计被领{{item.total || 0}}次</view>
+      </view>
+    </view>
+    <view class="item-bottom">
+      <view class="item-cell" data-id="{{item.id}}" bind:tap="handleDelete">
+        <view class="item-cell-btn red">删除</view>
+      </view>
+      <view class="item-cell center" bind:tap="handleEdit" data-id="{{item.id}}" data-uid="{{item.wifi_uid}}">
+        <view class="item-cell-btn blue">编辑</view>
+      </view>
+      <!-- <view class="item-cell end" bind:tap="handleRecord" data-id="{{item.id}}">
+        <view class="item-cell-btn orange">领取记录</view>
+      </view> -->
+    </view>
+    <view class="item-divider"></view>
+  </view>
+  <view wx:if="{{loading}}" class="loading">
+    <x-loading></x-loading>
+  </view>
+  <view wx:elif="{{!list || !list.length}}" class="loading">
+    <van-empty description="您还未添加优惠券"></van-empty>
+  </view>
+</view>
+<view class="bottom">
+  <view bind:tap="handleNew" class="bottom-btn" style="{{custom.color ? 'background:'+custom.color : ''}}">
+    添加优惠券
+  </view>
+</view>

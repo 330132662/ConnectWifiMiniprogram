@@ -1,0 +1,144 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<view class="top">
+  <view class="top-left">
+    <x-image x-class="top-left-image" fit="aspectFill" src="{{userInfo.avatar}}"></x-image>
+  </view>
+  <view class="top-m">
+    <view class="top-m-item mb">
+      <view class="top-m-item-title">{{userInfo.nickname || '未登录'}}</view>
+    </view>
+    <view class="top-m-item">
+      <van-tag wx:if="{{userInfo.role_id == 1}}" custom-class="top-m-item-tag tuan" type="danger" size="medium">
+        {{custom.text_tuan || '团长'}}
+      </van-tag>
+      <van-tag wx:elif="{{userInfo.role_id == 2}}" custom-class="top-m-item-tag tuo" type="primary" size="medium">
+        {{custom.text_tuo || '拓展员'}}
+      </van-tag>
+      <van-tag wx:elif="{{userInfo.role_id == 3}}" custom-class="top-m-item-tag shang" type="success" size="medium">
+        {{custom.text_shang || '商家'}}
+      </van-tag>
+      <van-tag wx:else size="medium">普通用户</van-tag>
+    </view>
+  </view>
+  <x-auth-btn mobile x-class="top-right" bind:click="handleNewWifi">
+    <view class="top-right-btn">
+      <x-icon name="add" color="#555" size="60"></x-icon>
+    </view>
+  </x-auth-btn>
+</view>
+<view class="search">
+  <view class="search-wrapper">
+    <view class="search-input">
+      <input class="search-input-input" type="text" value="{{search}}" placeholder="请输入WiFi或品牌名称搜索" bindconfirm="handleConfirmSearch" bind:input="onInputChange" />
+      <view wx:if="{{search}}" class="search-input-right" bind:tap="onInputClear">
+        <x-icon x-class="search-input-icon" name="clear" color="#999" size="30"></x-icon>
+      </view>
+    </view>
+    <x-auth-btn x-class="search-right" bind:click="handleConfirmSearch">
+      <view class="search-right-btn" style="{{utils.bg(custom.color)}}">搜索</view>
+    </x-auth-btn>
+  </view>
+</view>
+<view class="list">
+  <block wx:if="{{list && list.length}}">
+    <van-swipe-cell id="swiper_{{item.id}}" data-item="{{item}}" bind:click="handleSwiperClick" bind:open="handleSwiperOpen" bind:close="handleSwiperClose" disabled="{{listLoading}}" wx:for="{{list}}" wx:key="index" name="{{item.id}}" right-width="{{ 80 }}">
+      <view class="section">
+        <view class="section-content">
+          <view class="section-left">
+            <view class="section-left-t">
+              <view class="section-left-merchant">{{item.form_title || '品牌定制WiFi'}}</view>
+              <view wx:if="{{item.ssid}}" class="section-left-ssid">WiFi名称: {{item.ssid}}</view>
+              <view wx:else class="section-left-ssid" style="font-size:25rpx;color:#999;">
+                空码，请先配置WiFi信息后使用
+              </view>
+            </view>
+            <view wx:if="{{userInfo.agent_id}}" class="section-left-b">
+              <view class="section-left-item mb">
+                昨日有效连接
+                <text class="section-left-item__text" style="{{custom.color ? 'color:'+custom.color : ''}}">
+                  {{item.link_valid_yesterday || '0'}}
+                </text>
+                次
+              </view>
+              <view class="section-left-item">
+                累计有效连接
+                <text class="section-left-item__text" style="{{custom.color ? 'color:'+custom.color : ''}}">
+                  {{item.link_valid || '0'}}
+                </text>
+                次
+              </view>
+            </view>
+            <view wx:else class="section-left-b">
+              <view class="section-left-item">
+                昨日连接
+                <text class="section-left-item__text" style="{{utils.text(custom.color)}}">
+                  {{item.link_total_yesterday || '0'}}
+                </text>
+                次
+              </view>
+              <view class="section-left-item">
+                累计连接
+                <text class="section-left-item__text" style="{{utils.text(custom.color)}}">
+                  {{item.link_total || '0'}}
+                </text>
+                次
+              </view>
+            </view>
+          </view>
+          <view class="section-right">
+            <image wx:if="{{custom.active_h5_code == 1 && item.h5_code}}" class="section-right-image" mode="aspectFit" src="{{item.h5_code}}"></image>
+            <image wx:elif="{{custom.active_qr_code == 1 && item.qr_code}}" class="section-right-image" mode="aspectFit" src="{{item.qr_code}}"></image>
+            <image wx:else class="section-right-image" mode="aspectFit" src="{{item.mini_code}}"></image>
+          </view>
+        </view>
+        <view class="section-bottom">
+          <view style="display:flex;padding: 0 10rpx;">
+            <view class="section-bottom-left" bind:tap="handlePrint" data-item="{{item}}">
+              <x-icon class="section-bottom-left-icon" name="print" size="40" color="#ccc"></x-icon>
+            </view>
+            <button class="section-bottom-left" data-uid="{{item.uid}}" open-type="share" data-item="{{item}}">
+              <x-icon class="section-bottom-left-icon" name="share" size="40" color="#aaa"></x-icon>
+            </button>
+          </view>
+          <view class="section-bottom-right">
+            <view class="section-bottom-btn mr" style="{{utils.border(custom.color)}}" data-uid="{{item.uid}}" bind:tap="handleManagerClick">
+              管理
+            </view>
+            <view class="section-bottom-btn bg" style="{{utils.bg(custom.color)}}" data-uid="{{item.uid}}" bind:tap="handleEditClick">
+              修改
+            </view>
+          </view>
+        </view>
+      </view>
+      <view slot="right" class="section-delete">
+        <x-icon class="section-delete-icon" name="delete" color="#fff" size="55"></x-icon>
+      </view>
+    </van-swipe-cell>
+  </block>
+  <block wx:if="{{loading}}">
+    <view class="loading">
+      <van-loading type="spinner"></van-loading>
+    </view>
+  </block>
+  <block wx:else>
+    <van-empty wx:if="{{!list || !list.length}}" description="未找到相关数据，请换个词搜索试试"></van-empty>
+    <view wx:elif="{{finished && list.length >= 3}}" class="finished">
+      <view class="finished-text">已全部加载完毕</view>
+    </view>
+  </block>
+</view>
+<van-overlay show="{{showDialog}}"></van-overlay>
+<view wx:if="{{showDialog}}" class="dialog">
+  <view class="dialog-top">
+    <view class="dialog-tip">请确认打印机已安装正确，再次点击确认可开始打印【{{printNum}}张】WiFi码 . . .</view>
+    <van-stepper step="1" plus-class="dialog-step-plus" minus-class="dialog-step-minus" input-class="dialog-step-input" integer min="1" max="10" input-width="150rpx" button-size="65rpx" value="{{printNum || 1}}" bind:change="onStepChange" />
+  </view>
+  <view class="dialog-bottom">
+    <view bind:tap="handleCancel" class="dialog-bottom-btn">取消</view>
+    <view bind:tap="handleConfirmPrint" class="dialog-bottom-btn confirm">确认</view>
+  </view>
+</view>
+<view style="position:fixed;left:-9999px;top:0">
+  <canvas canvas-id="print" style="width:{{canvasWidth}}px; height:{{canvasHeight}}px;" />
+</view>

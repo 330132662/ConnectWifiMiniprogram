@@ -1,0 +1,153 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<view class="top {{custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video ? 'ad' : ''}}">
+  <block wx:if="{{!singlePage && custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video}}">
+    <x-ad x-class="top-ad" type="video" unitId="{{custom.form_ad.ad_video}}">
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{$.custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" image-class="swiper-item-banner-image" fit="cover" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <view wx:else class="top-ad-empty">
+        <view class="top-ad-empty-text">广告加载失败</view>
+      </view>
+    </x-ad>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'image'}}">
+    <swiper class="swiper" autoplay circular>
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" image-class="swiper-item-banner-image" fit="aspectFill" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <block wx:else>
+        <swiper-item class="swiper-item empty">
+          <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'video'}}">
+    <video wx:if="{{custom.video}}" unit-id="{{custom.form_ad.ad_tiepian || ''}}" class="top-video" muted="{{true}}" show-mute-btn="{{true}}" src="{{custom.video}}" autoplay binderror="onVideoError" loop show-fullscreen-btn="{{false}}" show-center-play-btn="{{false}}" enable-play-gesture="{{true}}" object-fit="cover"></video>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </block>
+  <view wx:else class="swiper">
+    <view wx:if="{{!userInfo.openid}}" class="swiper-item center">
+      <view class="swiper-item-empty">登录后可查看详情</view>
+    </view>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </view>
+</view>
+<view class="title">
+  <view class="title-item">
+    <x-icon class="title-item-icon" name="mine" size="27" color="#aaa"></x-icon>
+    <text class="title-item-text">帮您分销拓客</text>
+  </view>
+  <view class="title-item">
+    <x-icon class="title-item-icon" name="money" size="27" color="#aaa"></x-icon>
+    <text class="title-item-text">帮您赚取佣金</text>
+  </view>
+  <view class="title-item">
+    <x-icon class="title-item-icon" name="wifi" size="27" color="#aaa"></x-icon>
+    <text class="title-item-text">帮您快速连接</text>
+  </view>
+</view>
+<view class="form">
+  <view class="form-item" bind:tap="onActionShow">
+    <view class="form-item-label">代理商类型：</view>
+    <view class="form-item-content">
+      <view wx:if="{{form.role_id}}" class="form-item-text strong">{{form.role_name || '-'}}</view>
+      <view wx:else class="form-item-text placeholder">点击选择代理商类型</view>
+    </view>
+  </view>
+  <view wx:if="{{form.role_id && form.percent > 0}}" class="form-item">
+    <view class="form-item-label">分佣比例：</view>
+    <view class="form-item-content">
+      <view class="form-item-content-percent">{{form.percent}}%</view>
+      <view class="form-item-right" bind:tap="handleShowMiniPopup">
+        <x-icon class="form-item-right__icon" name="info-o" size="32" color="#ff976a"></x-icon>
+      </view>
+    </view>
+  </view>
+  <view class="form-item">
+    <view class="form-item-label">真实姓名：</view>
+    <view class="form-item-content">
+      <input type="text" cursor-spacing="50" always-embed data-name="realname" bindinput="onInputChange" class="form-item-input" placeholder="请输入真实姓名" placeholder-class="form-item-placeholder" value="{{form.realname}}"></input>
+      <view class="form-item-right" wx:if="{{form.realname}}" data-name="realname" bind:tap="onClearClick">
+        <x-icon class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+      </view>
+      <view class="form-item-right" wx:else data-name="realname" bind:tap="onShowTip">
+        <x-icon class="form-item-right__icon" name="info-o" size="32" color="#ff976a"></x-icon>
+      </view>
+    </view>
+  </view>
+  <view class="form-item" wx:if="{{mobileError}}">
+    <view class="form-item-label">手机号：</view>
+    <view class="form-item-content">
+      <input type="text" cursor-spacing="50" always-embed data-name="mobile" bindinput="onInputChange" class="form-item-input" placeholder="请输入您的手机号" placeholder-class="form-item-placeholder" value="{{form.mobile}}"></input>
+      <view class="form-item-right" wx:if="{{form.mobile}}" data-name="mobile" bind:tap="onClearClick">
+        <x-icon class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+      </view>
+      <view class="form-item-right" wx:else data-name="mobile" bind:tap="onShowTip">
+        <x-icon class="form-item-right__icon" name="info-o" size="32" color="#ff976a"></x-icon>
+      </view>
+    </view>
+  </view>
+  <view class="form-group">
+    <view class="form-group-cell">
+      <x-icon class="form-group-cell-icon" name="info-o" size="25"></x-icon>
+      <view class="form-group-cell-text">相同WiFi{{custom.fs_1_minutes}}分钟内重复连接，仅计入一次有效连接；</view>
+    </view>
+    <view class="form-group-cell">
+      <x-icon class="form-group-cell-icon" name="info-o" size="25"></x-icon>
+      <view class="form-group-cell-text">每日中午12点统计前一天的有效连接并累计收益；</view>
+    </view>
+    <view class="form-group-cell">
+      <x-icon class="form-group-cell-icon" name="info-o" size="25"></x-icon>
+      <view class="form-group-cell-text">用户通过按钮看完视频广告并成功连接wifi后方可计入一次有效连接；</view>
+    </view>
+  </view>
+</view>
+<view class="pay" wx:if="{{form.agent_pay == 1}}">
+  <x-blink wx:if="{{form.agent_fee > 0}}" x-class="pay-tip" color="#e00" text="申请成为{{form.role_name}}，需要支付{{form.agent_fee}}元"></x-blink>
+  <x-blink wx:else x-class="pay-tip" text="免费入驻" color="#e00"></x-blink>
+</view>
+<x-auth-btn bind:mobileError="onMobileError" x-class="auth" mobile bind:click="handleConfirm">
+  <view class="auth-wrapper">
+    <view class="auth-btn {{form.role_id ? '' : 'disabled'}}" style="{{utils.bg(custom.color)}}">
+      立即申请
+    </view>
+  </view>
+</x-auth-btn>
+<x-divider class="copyright" type="{{custom.copyright_type}}" desc="{{custom.copyright_text}}" url="{{custom.copyright_url}}">
+  <image class="copyright-content" src="{{custom.copyright_image}}" mode="aspectFit"></image>
+</x-divider>
+<van-action-sheet z-index="999" custom-class="action" description="{{text_tuan}}可邀请{{text_tuo}}/{{text_shang}}，{{text_tuo}}仅可邀请{{text_shang}}" catch:select="onInviteSelect" catch:cancel="onActionClose" catch:close="onActionClose" close-on-click-overlay close-on-click-action show="{{ showAction }}" actions="{{ actions }}" cancel-text="取消" />
+<view wx:if="{{showMiniPopup}}" class="mini">
+  <view class="mini-title">分销佣金说明</view>
+  <view class="mini-content">
+    <view class="mini-item mb">
+      <view class="mini-item-head">1.单次有效连接的佣金</view>
+      <view class="mini-item-content">因广告性质的不确定性，每日佣金的金额可能会存在细微变动，故佣金累计金额以每日生成的结算单为准;</view>
+    </view>
+    <view class="mini-item">
+      <view class="mini-item-head">2.拓展员/商家的佣金算法（{{custom.cash_type == 0 ? '动态比例' : '固定金额'}}）</view>
+      <view wx:if="{{custom.cash_type == 0}}" class="mini-item-content">
+        若平台设置单次有效连接的佣金是0.3元，拓展员A的佣金比例是90%，商家B的佣金比例是80%，那么A的单次有效连接的佣金是0.3*90%，B的单次有效连接的佣金是0.3*90%*80%;
+      </view>
+      <view wx:else class="mini-item-content">
+        若平台设置单次有效连接的佣金是0.3元，拓展员A的佣金比例是90%，商家B的佣金比例是50%，那么A的单次有效连接的佣金是0.3*90%，B的单次有效连接的佣金是0.3*50%;
+      </view>
+    </view>
+  </view>
+  <view class="mini-bottom">
+    <view bind:tap="handleCloseMiniPopup" class="mini-bottom-btn" style="{{utils.bg(custom.color)}}">
+      我知道了
+    </view>
+  </view>
+</view>
+<view class="mini-mask" wx:if="{{showMiniPopup}}" bind:tap="handleCloseMiniPopup"></view>

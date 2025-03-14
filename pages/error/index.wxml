@@ -1,0 +1,2 @@
+<view class="gutter"></view>
+<van-empty image="error" description="{{tip || '服务器出错，请检查后台是否初始化。'}}" />

@@ -1,0 +1,14 @@
+<view wx:if="{{type === 'image'}}" class="x-divider" style="justify-content:center" bind:tap="onClick">
+  <view class="x-divider-content">
+    <slot></slot>
+  </view>
+</view>
+<view wx:else class="x-divider" bind:tap="onClick">
+  <view wx:if="{{desc}}" class="x-divider-line left"></view>
+  <view class="x-divider-content">
+    <view wx:if="{{desc}}" class="x-divider-text" style="font-size:{{size}}rpx;color:{{color}}">
+      {{desc}}
+    </view>
+  </view>
+  <view wx:if="{{desc}}" class="x-divider-line right"></view>
+</view>

@@ -1,0 +1,93 @@
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<x-auth-btn x-class="top" bind:click="handleInfoClick">
+  <view class="top-left">
+    <x-image x-class="top-left-avatar" image-class="top-left-avatar-image" src="{{userInfo.avatar}}"></x-image>
+  </view>
+  <view class="top-m">
+    <view class="top-m-title">{{userInfo.nickname || '未登录'}}</view>
+    <view class="top-m-tag">
+      <van-tag wx:if="{{userInfo.role_id == 1}}" type="danger" size="large">
+        {{custom.text_tuan || '团长'}}
+      </van-tag>
+      <van-tag wx:elif="{{userInfo.role_id == 2}}" type="primary" size="large">
+        {{custom.text_tuo || '拓展员'}}
+      </van-tag>
+      <van-tag wx:elif="{{userInfo.role_id == 3}}" type="success" size="large">
+        {{custom.text_shang || '商家'}}
+      </van-tag>
+      <van-tag wx:elif="{{userInfo && userInfo.openid}}" size="medium">普通用户</van-tag>
+    </view>
+  </view>
+  <view class="top-right">
+    <!-- <x-icon x-class="top-right-icon" name="setting"></x-icon> -->
+  </view>
+</x-auth-btn>
+<view wx:if="{{custom.form_ad.ad_banner_active==1 && custom.form_ad.ad_banner}}" class="ad-center">
+  <ad unit-id="{{custom.form_ad.ad_banner}}"></ad>
+</view>
+<view class="ul" wx:if="{{custom}}">
+  <button class="li button" open-type="contact">
+    <view class="li-left">
+      <x-image x-class="li-left-icon" image-class="li-left-icon-image" src="{{custom.form_icon.zxkf || custom.host+'/static/wifi/image/icon_zxkf.png'}}"></x-image>
+      <view class="li-left-text">在线客服</view>
+    </view>
+    <view class="li-right">
+      <x-icon x-class="li-right-icon" name="arrow-right"></x-icon>
+    </view>
+  </button>
+  <!-- 我的优惠券 -->
+  <x-auth-btn x-class="li" data-name="yhq" bind:click="handleItemClick">
+    <view class="li-left">
+      <x-image x-class="li-left-icon" image-class="li-left-icon-image" src="{{custom.form_icon.yhq || custom.host+'/static/wifi/image/icon_yhq.png'}}"></x-image>
+      <view class="li-left-text">我的优惠券</view>
+    </view>
+    <view class="li-right">
+      <x-icon x-class="li-right-icon" name="arrow-right"></x-icon>
+    </view>
+  </x-auth-btn>
+  <!-- 代理商申请 -->
+  <x-auth-btn wx:if="{{!userInfo.role_id && canApplyAuto}}" x-class="li" data-name="dlssq" bind:click="handleItemClick">
+    <view class="li-left">
+      <x-image x-class="li-left-icon" image-class="li-left-icon-image" src="{{custom.form_icon.dlssq  || custom.host+'/static/wifi/image/icon_dlssq.png'}}"></x-image>
+      <view class="li-left-text">代理商申请</view>
+    </view>
+    <view class="li-right">
+      <x-icon x-class="li-right-icon" name="arrow-right"></x-icon>
+    </view>
+  </x-auth-btn>
+  <!-- 申请提现 -->
+  <x-auth-btn wx:if="{{userInfo.role_id > 0}}" mobile x-class="li" data-name="sqtx" bind:click="handleItemClick">
+    <view class="li-left">
+      <x-image x-class="li-left-icon" image-class="li-left-icon-image" src="{{custom.form_icon.sqtx || custom.host+'/static/wifi/image/icon_sqtx.png'}}"></x-image>
+      <view class="li-left-text">申请提现</view>
+    </view>
+    <view class="li-right">
+      <x-icon x-class="li-right-icon" name="arrow-right"></x-icon>
+    </view>
+  </x-auth-btn>
+  <!-- 提现记录 -->
+  <x-auth-btn wx:if="{{userInfo.role_id > 0}}" mobile x-class="li" data-name="txjl" bind:click="handleItemClick">
+    <view class="li-left">
+      <x-image x-class="li-left-icon" image-class="li-left-icon-image" src="{{custom.form_icon.txjl || custom.host+'/static/wifi/image/icon_txjl.png'}}"></x-image>
+      <view class="li-left-text">提现记录</view>
+    </view>
+    <view class="li-right">
+      <x-icon x-class="li-right-icon" name="arrow-right"></x-icon>
+    </view>
+  </x-auth-btn>
+  <!-- 帮助中心 -->
+  <x-auth-btn x-class="li" data-name="bzzx" bind:click="handleItemClick">
+    <view class="li-left">
+      <x-image x-class="li-left-icon" image-class="li-left-icon-image" src="{{custom.form_icon.bzzx || custom.host+'/static/wifi/image/icon_bzzx.png'}}"></x-image>
+      <view class="li-left-text">帮助中心</view>
+    </view>
+    <view class="li-right">
+      <x-icon x-class="li-right-icon" name="arrow-right"></x-icon>
+    </view>
+  </x-auth-btn>
+</view>
+<view wx:if="{{custom.copyright_type == 'text' || custom.copyright_type == 'image'}}" class="bottom">
+  <x-divider class="copyright" type="{{custom.copyright_type}}" desc="{{custom.copyright_text}}" url="{{custom.copyright_url}}">
+    <image class="copyright-content" src="{{custom.copyright_image}}" mode="aspectFit"></image>
+  </x-divider>
+</view>

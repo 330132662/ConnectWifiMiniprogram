@@ -1,0 +1,4 @@
+<view class="x-class x-icon" style="{{color ? 'color:'+color : ''}};" bind:tap="onClick">
+  <image wx:if="{{ isImageName }}" style="width:{{size}}rpx;height:{{size}}rpx;" src="{{ name }}" mode="{{ mode }}" class="x-icon__image" />
+  <view wx:else style="{{size ? 'font-size:'+size+'rpx': ''}};font-weight:{{bold ? 'bold' : 'normal'}}" class="x-icon-item {{ classPrefix }} {{ isImageName ? '' : classPrefix + '-' + name }}"></view>
+</view>

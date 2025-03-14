@@ -1,0 +1,166 @@
+@import '../../assets/styles/index.scss';
+@import '../../assets/styles/animate.scss';
+
+page {
+	background: #f7f7f7;
+}
+.ad {
+	&-center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: auto;
+		margin-bottom: 30rpx;
+		padding: 0 30rpx;
+		box-sizing: border-box;
+		overflow: hidden;
+	}
+}
+.list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 30rpx;
+	.item {
+		width: 690rpx;
+		box-sizing: border-box;
+		border-radius: 10rpx;
+		background: #fff;
+		overflow: hidden;
+		margin-bottom: 30rpx;
+		&-wrapper {
+			padding: 20rpx;
+			box-sizing: border-box;
+			display: flex;
+			align-items: center;
+		}
+		&-left {
+			flex-shrink: 0;
+			width: 150rpx;
+			height: 150rpx;
+		}
+		&-right {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding-left: 20rpx;
+			height: 150rpx;
+			&-top {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+			&-name {
+				width: 380rpx;
+				font-size: 30rpx;
+				@include ellipsis();
+			}
+			&-meter {
+				flex: 1;
+				text-align: right;
+				flex-shrink: 0;
+				font-size: 25rpx;
+				color: #888;
+			}
+			&-m {
+				display: flex;
+				width: 100%;
+				align-items: center;
+				&-remark {
+					font-size: 23rpx;
+					color: #555;
+					@include ellipsis();
+				}
+				&-tag {
+					font-size: 20rpx;
+					color: #eee;
+					transform: scale(0.9);
+					transform-origin: left center;
+					background: #aaa;
+					max-width: 135rpx;
+					padding: 10rpx;
+					box-sizing: border-box;
+					display: flex;
+					flex-wrap: nowrap;
+					flex-shrink: 0;
+					align-items: center;
+					justify-content: center;
+					line-height: 1;
+					overflow: hidden;
+					white-space: nowrap;
+					border-radius: 5rpx;
+					&:not(:first-child) {
+						margin-left: 5rpx;
+					}
+					&.add {
+						background: $primary-color;
+						color: #fff;
+					}
+					&-text {
+						width: 100%;
+						overflow: hidden;
+						@include ellipsis();
+					}
+				}
+			}
+			&-locate {
+				display: flex;
+				align-items: center;
+				font-size: 26rpx;
+				margin-bottom: -20rpx;
+				padding-bottom: 20rpx;
+				padding-top: 20rpx;
+			}
+			&-icon {
+				margin-right: 12rpx;
+			}
+			&-address {
+				color: #888;
+				@include ellipsis();
+			}
+			&-desc {
+				font-size: 25rpx;
+				color: #888;
+				@include ellipsis();
+			}
+		}
+	}
+	.coupon {
+		padding-left: 190rpx;
+		box-sizing: border-box;
+		padding-bottom: 10rpx;
+		&-item {
+			display: flex;
+			align-items: center;
+			font-size: 23rpx;
+			margin-bottom: 10rpx;
+			&-icon {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+				margin-right: 10rpx;
+				background: #db6f3f;
+				color: #fff;
+				font-size: 22rpx;
+				width: 33rpx;
+				height: 33rpx;
+				border-radius: 2rpx;
+			}
+			&-text {
+				padding-right: 20rpx;
+				color: #555;
+				@include ellipsis();
+			}
+		}
+	}
+}
+.loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20rpx;
+	padding-bottom: 40rpx;
+}

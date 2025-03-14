@@ -1,0 +1,172 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<view class="top {{custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video ? 'ad' : ''}}">
+  <block wx:if="{{!singlePage && custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video}}">
+    <x-ad x-class="top-ad" type="video" unitId="{{custom.form_ad.ad_video}}">
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{$.custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" image-class="swiper-item-banner-image" fit="cover" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <view wx:else class="top-ad-empty">
+        <view class="top-ad-empty-text">广告加载失败</view>
+      </view>
+    </x-ad>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'image'}}">
+    <swiper class="swiper" autoplay circular>
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" image-class="swiper-item-banner-image" fit="aspectFill" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <block wx:else>
+        <swiper-item class="swiper-item empty">
+          <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'video'}}">
+    <video wx:if="{{custom.video}}" unit-id="{{custom.form_ad.ad_tiepian || ''}}" class="top-video" muted="{{true}}" show-mute-btn="{{true}}" src="{{custom.video}}" autoplay binderror="onVideoError" loop show-fullscreen-btn="{{false}}" show-center-play-btn="{{false}}" enable-play-gesture="{{true}}" object-fit="cover"></video>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </block>
+  <view wx:else class="swiper">
+    <view wx:if="{{!userInfo.openid}}" class="swiper-item center">
+      <view class="swiper-item-empty">登录后可查看详情</view>
+    </view>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </view>
+</view>
+<!-- <view wx:if="{{custom.host}}" class="grid">
+  <view class="grid-item" data-id="60" bindtap="handleHuiItemClick">
+    <x-image x-class="grid-item-icon" src="{{custom.host + '/static/wifi/image/cps_kb.png'}}"></x-image>
+    <view class="grid-item-name">口碑好店</view>
+  </view>
+  <view class="grid-item" data-id="13" bindtap="handleHuiItemClick">
+    <x-image x-class="grid-item-icon" src="{{custom.host + '/static/wifi/image/cps_pdd.png'}}"></x-image>
+    <view class="grid-item-name">百亿补贴</view>
+  </view>
+  <view class="grid-item" data-id="31" bindtap="handleHuiItemClick">
+    <x-image x-class="grid-item-icon" src="{{custom.host + '/static/wifi/image/cps_baiguoyuan.png'}}"></x-image>
+    <view class="grid-item-name">百果园</view>
+  </view>
+  <view class="grid-item" data-id="33" bindtap="handleHuiItemClick">
+    <x-image x-class="grid-item-icon" src="{{custom.host + '/static/wifi/image/cps_ruixing.png'}}"></x-image>
+    <view class="grid-item-name">瑞幸咖啡</view>
+  </view>
+  <view class="grid-item" data-id="54" bindtap="handleHuiItemClick">
+    <x-image x-class="grid-item-icon" src="{{custom.host + '/static/wifi/image/cps_lianlian.png'}}"></x-image>
+    <view class="grid-item-name">联联周边</view>
+  </view>
+  <view class="grid-item" data-id="76" bindtap="handleHuiItemClick">
+    <x-image x-class="grid-item-icon" src="{{custom.host + '/static/wifi/image/cps_tpp.png'}}"></x-image>
+    <view class="grid-item-name">特惠电影票</view>
+  </view>
+  <view class="grid-item" data-id="52" bindtap="handleHuiItemClick">
+    <x-image x-class="grid-item-icon" src="{{custom.host + '/static/wifi/image/cps_sf.png'}}"></x-image>
+    <view class="grid-item-name">平价快递</view>
+  </view>
+  <view class="grid-item" data-id="84" bindtap="handleHuiItemClick">
+    <x-image x-class="grid-item-icon" src="{{custom.host + '/static/wifi/image/cps_wph.png'}}"></x-image>
+    <view class="grid-item-name">唯品会3折</view>
+  </view>
+</view> -->
+<!-- <view wx:if="{{custom.host}}" class="section">
+  <view class="section-item" data-id="37" bindtap="handleHuiItemClick">
+    <view class="section-item-left">
+      <x-image x-class="section-item-left-image" src="{{custom.host + '/static/wifi/image/cps_xicha.png'}}"></x-image>
+    </view>
+    <view class="section-item-right">
+      <view class="section-item-title">喜茶</view>
+      <view class="section-item-desc">喝茶前，先领券</view>
+    </view>
+  </view>
+  <view class="section-item" data-id="32" bindtap="handleHuiItemClick">
+    <view class="section-item-left">
+      <x-image x-class="section-item-left-image" src="{{custom.host + '/static/wifi/image/cps_naixue.jpeg'}}"></x-image>
+    </view>
+    <view class="section-item-right">
+      <view class="section-item-title">奈雪的茶</view>
+      <view class="section-item-desc">领券喝茶更优惠</view>
+    </view>
+  </view>
+</view> -->
+<view class="box" bind:tap="nav2Plugin" data-url="/hui/movie/index">
+  <view class="box-banner">
+    <x-image x-class="box-banner-image" fit="widthFix" src="{{custom.host + '/static/wifi/image/banner_bendi.png'}}"></x-image>
+  </view>
+</view>
+<!-- <view class="box" bind:tap="nav2Plugin" data-url="/hui/meishi/index">
+  <view class="box-banner">
+    <x-image x-class="box-banner-image" fit="widthFix" src="{{custom.host + '/static/wifi/image/banner_dapai.jpg'}}"></x-image>
+  </view>
+</view> -->
+<view class="box" wx:if="{{custom.host}}">
+  <view class="box-item" data-name="meituan" bindtap="handleNavClick">
+    <x-image x-class="box-item-image" src="{{custom.host + '/static/wifi/image/cps_meituan.png'}}"></x-image>
+  </view>
+  <view class="box-item" data-name="didi" bindtap="handleNavClick">
+    <x-image x-class="box-item-image" src="{{custom.host + '/static/wifi/image/cps_didi.png'}}"></x-image>
+  </view>
+  <view class="box-item" data-name="ele" bindtap="handleNavClick">
+    <x-image x-class="box-item-image" src="{{custom.host + '/static/wifi/image/cps_ele.png'}}"></x-image>
+  </view>
+</view>
+<!-- <hot-movie data="{{options}}" /> -->
+<!-- <view class="box" bind:tap="nav2Plugin" data-url="/hui/movie/index">
+  <view class="box-banner movie">
+    <x-image x-class="box-banner-image" fit="widthFix" src="{{custom.host + '/static/wifi/image/banner_movie.jpeg'}}"></x-image>
+  </view>
+</view> -->
+<!-- <periphery-lists options="{{options}}"></periphery-lists> -->
+<!-- <view class="box" bind:tap="nav2Plugin" data-url="/hui/meishi/index">
+  <view class="box-banner">
+    <x-image x-class="box-banner-image" fit="widthFix" src="{{custom.host + '/static/wifi/image/banner_bendi.png'}}"></x-image>
+  </view>
+</view> -->
+<!-- <view class="box" bind:tap="nav2Plugin" data-url="/hui/meishi/index">
+  <view class="box-banner">
+    <x-image x-class="box-banner-image" fit="widthFix" src="{{custom.host + '/static/wifi/image/banner_dapai.jpg'}}"></x-image>
+  </view>
+</view> -->
+
+<view class="ul">
+  <view class="li" style="margin-top:20rpx" data-url="/hui/meishi/index" bindtap="nav2Plugin">
+    <x-image x-class="li-image" src="{{custom.host + '/static/wifi/image/banner_dapai.jpg'}}" fit="widthFix"></x-image>
+    <view class="li-bottom">
+      <view class="li-bottom-left">
+        <x-image x-class="li-bottom-left-icon" src="{{custom.host + '/static/wifi/image/cps_kb.png'}}"></x-image>
+      </view>
+      <view class="li-bottom-m">
+        <view class="li-bottom-title">外卖美食点餐优惠</view>
+        <view class="li-bottom-desc">一站式美食外卖团购优惠券</view>
+      </view>
+    </view>
+  </view>
+  <block wx:for="{{list}}">
+    <view class="li" wx:key="index" data-id="{{item.act_id}}" bindtap="handleHuiItemClick">
+      <x-image x-class="li-image" src="{{item.img}}" fit="widthFix"></x-image>
+      <view class="li-bottom">
+        <view class="li-bottom-left">
+          <x-image x-class="li-bottom-left-icon" src="{{item.icon}}"></x-image>
+        </view>
+        <view class="li-bottom-m">
+          <view class="li-bottom-title">{{item.act_name}}</view>
+          <view class="li-bottom-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{custom.form_ad.ad_banner_active && custom.form_ad.ad_banner && (index+1) % 7 == 0}}" class="ad-center" style="margin-bottom:30rpx">
+      <ad unit-id="{{custom.form_ad.ad_banner}}"></ad>
+    </view>
+  </block>
+  <view wx:if="{{loading}}" class="ul-loading">
+    <van-loading type="spinner"></van-loading>
+  </view>
+  <x-divider wx:elif="{{finished && list.length > 10}}" desc="已全部加载完毕"></x-divider>
+</view>

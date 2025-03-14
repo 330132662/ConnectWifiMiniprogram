@@ -1,0 +1,17 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "我的团队成员",
+  "usingComponents": {
+    "van-loading": "../../libs/vant/loading/index",
+    "van-empty": "../../libs/vant/empty/index",
+    "van-action-sheet": "../../libs/vant/action-sheet/index",
+    "x-loading": "../../components/common/loading/index",
+    "x-ad": "../../components/common/ad/index",
+    "x-image": "../../components/common/image/index",
+    "x-icon": "../../components/common/icon/index",
+    "x-divider": "../../components/common/divider/index",
+    "x-auth-btn": "../../components/common/auth-btn/index",
+    "x-record": "./components/record/index",
+    "x-history": "./components/history/index"
+  }
+}

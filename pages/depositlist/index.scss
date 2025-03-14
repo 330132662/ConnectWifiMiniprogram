@@ -1,0 +1,88 @@
+@import "../../assets/styles/index.scss";
+
+$size: 100rpx;
+page {
+  padding-bottom: 30rpx;
+  padding-bottom: calc(
+    constant(safe-area-inset-bottom) + 30rpx
+  ); /*兼容 IOS<11.2*/
+  padding-bottom: calc(env(safe-area-inset-bottom) + 30rpx); /*兼容 IOS>11.2*/
+}
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  &:not(:first-child) {
+    border-top: 1rpx solid #f2f2f2;
+  }
+  &-left {
+    width: $size;
+    height: $size;
+    &-image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &-m {
+    padding: 0 30rpx;
+    padding-right: 20rpx;
+    flex: 1;
+    height: $size;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &-title {
+      color: #333;
+      font-size: 32rpx;
+      @include ellipsis();
+    }
+    &-tip {
+      font-size: 25rpx;
+      color: #888;
+    }
+  }
+  &-right {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 160rpx;
+    height: $size;
+    &-price {
+      font-size: 38rpx;
+      font-style: italic;
+    }
+    &-tag {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 25rpx;
+      border-radius: 5rpx;
+      line-height: 1;
+      &.pending {
+        color: #888;
+      }
+      &.resolve {
+        color: $green;
+      }
+    }
+  }
+}
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.finished {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+  &-text {
+    font-size: 28rpx;
+    color: #999;
+  }
+}

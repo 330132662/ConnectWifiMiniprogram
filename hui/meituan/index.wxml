@@ -1,0 +1,33 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<van-tabs color="#eac30d" active="{{ currentName }}" bind:click="onTabClick">
+  <van-tab title="外卖" name="1" disabled="{{disabled || loading}}"></van-tab>
+  <van-tab title="优选" name="15" disabled="{{disabled || loading}}"></van-tab>
+  <van-tab title="附近秒杀" name="74" disabled="{{disabled || loading}}"></van-tab>
+  <van-tab title="到店优惠" name="9" disabled="{{disabled || loading}}"></van-tab>
+</van-tabs>
+<x-image wx:if="{{custom}}" bindtap="handleBtnClick" x-class="banner" src="{{custom.host + '/static/wifi/image/banner_mt.png'}}"></x-image>
+<view class="box">
+  <view class="box-item line">
+    <view class="box-item-icon">
+      <x-icon name="pocket" size="50"></x-icon>
+    </view>
+    <view class="box-item-title">领红包</view>
+  </view>
+  <view class="box-item line">
+    <view class="box-item-icon">
+      <x-icon name="order" size="50"></x-icon>
+    </view>
+    <view class="box-item-title">再下单</view>
+  </view>
+  <view class="box-item">
+    <view class="box-item-icon">
+      <x-icon name="coupon" size="50"></x-icon>
+    </view>
+    <view class="box-item-title">享优惠</view>
+  </view>
+</view>
+<view class="code">
+  <x-image wx:if="{{current && current.miniCode}}" previewImage x-class="code-image" src="{{current && current.miniCode}}"></x-image>
+  <view class="code-btn" style="{{utils.bg('#F6C543')}}" bindtap="handleBtnClick">免费领红包</view>
+</view>

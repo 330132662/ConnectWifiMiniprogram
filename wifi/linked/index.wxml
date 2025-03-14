@@ -1,0 +1,193 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || loading}}"></x-loading>
+<view class="top {{custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video ? 'ad' : ''}}">
+  <block wx:if="{{!singlePage && custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video}}">
+    <x-ad x-class="top-ad" type="video" unitId="{{custom.form_ad.ad_video}}">
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" fit="cover" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <view wx:else class="top-ad-empty">
+        <view class="top-ad-empty-text">广告加载失败</view>
+      </view>
+    </x-ad>
+  </block>
+  <block wx:elif="{{wifi.banner_type == 'image'}}">
+    <swiper class="swiper" autoplay circular>
+      <block wx:if="{{wifi.banners && wifi.banners.length}}">
+        <swiper-item wx:for="{{wifi.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" fit="aspectFill" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <block wx:else>
+        <swiper-item class="swiper-item empty">
+          <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </block>
+  <block wx:elif="{{wifi.banner_type == 'video'}}">
+    <video wx:if="{{wifi.video}}" unit-id="{{custom.form_ad.ad_tiepian || ''}}" class="top-video" muted="{{true}}" show-mute-btn="{{true}}" src="{{wifi.video}}" autoplay binderror="onVideoError" loop show-fullscreen-btn="{{false}}" show-center-play-btn="{{false}}" enable-play-gesture="{{true}}" object-fit="cover"></video>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </block>
+  <view wx:else class="swiper">
+    <view wx:if="{{!userInfo.openid}}" class="swiper-item center">
+      <view class="swiper-item-empty">登录后可查看详情</view>
+    </view>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </view>
+</view>
+<view wx:if="{{wifi.notice}}" class="notice" style="margin-bottom:25rpx">
+  <van-notice-bar left-icon="volume-o" text="{{wifi.notice}}" />
+</view>
+<view wx:else class="title">
+  <view class="title-item">
+    <x-icon class="title-item-icon" name="wifi" size="27" color="#aaa"></x-icon>
+    <text class="title-item-text">一键快速连接</text>
+  </view>
+  <view class="title-item">
+    <x-icon class="title-item-icon" name="password" size="27" color="#aaa"></x-icon>
+    <text class="title-item-text">无需告知密码</text>
+  </view>
+  <view class="title-item">
+    <x-icon class="title-item-icon" name="safe" size="27" color="#aaa"></x-icon>
+    <text class="title-item-text">安全防蹭网</text>
+  </view>
+</view>
+<view class="box">
+  <view class="box-left" bind:tap="handle2Contact">
+    <x-image wx:if="{{wifi.logo || wifi.form_logo}}" x-class="box-left-image" src="{{wifi.logo || wifi.form_logo}}" fit="aspectFill"></x-image>
+    <view wx:else class="box-left-image" style="{{utils.bg(custom.color)}}">
+      <x-icon name="wifi" size="100" color="#fff"></x-icon>
+    </view>
+  </view>
+  <view class="box-m">
+    <view class="box-m-head">
+      <view class="box-m-title">{{wifi.name || wifi.form_title || '私人定制WiFi'}}</view>
+      <view wx:if="{{wifi.total_wifi > 1}}" class="box-m-more" bindtap="handleMoreWifi">
+        <view class="box-m-more-btn" style="{{utils.bg(custom.color)}}">更多WiFi</view>
+      </view>
+    </view>
+    <view bind:tap="handle2Locate" data-item="{{wifi}}">
+      <view class="box-m-remark">{{wifi.remark || wifi.form_desc || '点击连接WiFi，一键快速安全上网'}}</view>
+      <view wx:if="{{wifi.address}}" class="box-m-bottom">
+        <x-icon x-class="box-m-bottom-icon" name="locate" size="25"></x-icon>
+        <view class="box-m-bottom-text">{{wifi.address}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 优惠券 -->
+<swiper wx:if="{{wifi.list_coupon && wifi.list_coupon.length}}" class="coupon" circular previous-margin="10px" next-margin="10px" autoplay>
+  <block wx:for="{{wifi.list_coupon}}" wx:key="index">
+    <swiper-item class="coupon-item">
+      <view class="coupon-wrapper">
+        <view class="coupon-bg"></view>
+        <view class="coupon-left">
+          <view class="coupon-title">{{item.name}}</view>
+          <view class="coupon-desc">{{item.desc}}</view>
+          <view class="coupon-bottom">
+            <view class="coupon-bottom-get">
+              领取时间：{{utils.getCouponTime(item.get_active, item.get_begin,item.get_end,'领取')}}
+            </view>
+            <view class="coupon-bottom-use">
+              使用时间：{{utils.getCouponTime(item.use_active, item.use_begin,item.use_end,'使用')}}
+            </view>
+          </view>
+        </view>
+        <view class="coupon-right">
+          <block wx:if="{{utils.hasRemain(item.stock, item.total) > 0}}">
+            <view wx:if="{{item.disabled}}" class="coupon-right-btn" style="opacity:0.5">
+              {{item.forbid?'立即领取':'已领取'}}
+            </view>
+            <x-auth-btn wx:else authorized="{{hasInfo}}" mobile="{{hasMobile}}" x-class="coupon-right-btn" data-coupon="{{item}}" bind:click="handleLingqu">
+              立即领取
+            </x-auth-btn>
+            <view class="coupon-right-btn-tip">剩余{{utils.hasRemain(item.stock, item.total)}}张</view>
+          </block>
+          <block wx:else>
+            <view wx:if="{{item.disabled}}" class="coupon-right-btn" style="opacity:0.5">
+              {{item.forbid?'立即领取':'已领取'}}
+            </view>
+            <view wx:else class="coupon-right-btn" style="opacity:0.5">立即领取</view>
+            <view class="coupon-right-btn-tip" style="opacity:0.5">已被抢完</view>
+          </block>
+        </view>
+      </view>
+    </swiper-item>
+  </block>
+</swiper>
+<view wx:else class="gutter" style="height: 50rpx"></view>
+<view class="wrapper" wx:if="{{wifi.menus && wifi.menus.length}}">
+  <view class="wrapper-title">{{wifi.menu_title || '服务中心'}}</view>
+  <view class="wrapper-content">
+    <view class="wrapper-item" wx:for="{{wifi.menus}}" wx:key="index">
+      <view class="wrapper-item-wrapper" data-item="{{item}}" bind:tap="handleItemClick">
+        <x-image x-class="wrapper-item-logo" fit="cover" src="{{item.src}}"></x-image>
+        <view class="wrapper-item-title">{{item.name}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="detail" wx:if="{{wifi.detail}}">
+  <view class="detail-content">
+    <x-richtext content="{{wifi.detail}}"></x-richtext>
+  </view>
+</view>
+<view wx:if="{{!loading && custom.copyright_type == 'text' || custom.copyright_type == 'image'}}" class="copyright">
+  <x-divider type="{{custom.copyright_type}}" desc="{{custom.copyright_text}}" url="{{custom.copyright_url}}">
+    <image class="copyright-content" src="{{custom.copyright_image}}" mode="aspectFit"></image>
+  </x-divider>
+</view>
+<view class="bottom">
+  <view class="bottom-left">
+    <view wx:if="{{linkStatus == 3}}" class="bottom-left-btn" bind:tap="handleCopyPassword">
+      <view class="bottom-left-btn-wrapper" bind:tap>
+        <x-icon x-class="bottom-left-btn-icon" color="#f37b1d" name="copy" size="35"></x-icon>
+        <view class="bottom-left-btn-text" style="color: #f37b1d">复制密码</view>
+      </view>
+    </view>
+    <button wx:else class="bottom-left-btn" open-type="share">
+      <view class="bottom-left-btn-wrapper">
+        <x-icon x-class="bottom-left-btn-icon" name="share" size="35"></x-icon>
+        <view class="bottom-left-btn-text">分享</view>
+      </view>
+    </button>
+    <x-auth-btn authorized="{{hasInfo}}" mobile="{{hasMobile}}" x-class="bottom-left-btn" bind:click="handle2Coupon">
+      <view class="bottom-left-btn-wrapper">
+        <x-icon x-class="bottom-left-btn-icon" name="coupon" size="35"></x-icon>
+        <view class="bottom-left-btn-text">优惠券</view>
+      </view>
+    </x-auth-btn>
+  </view>
+  <view class="bottom-right">
+    <x-auth-btn wx:if="{{linkStatus == 0}}" style="{{utils.bg(custom.color)}}" authorized="{{hasInfo}}" mobile="{{hasMobile}}" x-class="bottom-right-btn" bind:click="handleConnectWifi">
+      连接WiFi
+    </x-auth-btn>
+    <view wx:elif="{{linkStatus == 1}}" class="bottom-right-linking" style="margin-top:-15rpx">
+      <x-icon color="{{custom.color}}" class="bottom-right-linking-icon" name="wifi" size="50"></x-icon>
+      <x-blink color="{{custom.color}}" size="33" text="WiFi已安全连接，请放心使用"></x-blink>
+    </view>
+    <view wx:elif="{{linkStatus == 2}}" class="bottom-right-linking">
+      <view class="logo">
+        <view class="wifi">
+          <view class="circles">
+            <view class="circle"></view>
+            <view class="circle"></view>
+            <view class="circle"></view>
+            <view class="circle"></view>
+          </view>
+        </view>
+      </view>
+      <x-blink size="33" text="正在连接WiFi，请耐心等候"></x-blink>
+    </view>
+    <x-auth-btn wx:else style="background: #eee;color: #888;font-size:29rpx" authorized="{{hasInfo}}" mobile="{{hasMobile}}" x-class="bottom-right-btn" bind:click="handleConnectWifi">
+      点击重新连接WiFi
+    </x-auth-btn>
+  </view>
+</view>

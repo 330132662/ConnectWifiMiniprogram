@@ -1,0 +1,45 @@
+$primary-color: #1989fa;
+$color-brand: #1989fa;
+
+$tuan: #0081ff;
+$tuo: #e54d42;
+$shang: #3eb93b;
+
+$color-1: lighten($primary-color, 30%);
+$color-2: lighten($primary-color, 25%);
+$color-3: lighten($primary-color, 20%);
+$color-4: lighten($primary-color, 15%);
+$color-5: lighten($primary-color, 10%);
+$color-6: $primary-color;
+$color-7: darken($primary-color, 5%);
+$color-8: darken($primary-color, 10%);
+$color-9: darken($primary-color, 15%);
+$color-10: darken($primary-color, 20%);
+
+$gray-1: #f7f8fa;
+$gray-2: #f2f3f5;
+$gray-3: #ebedf0;
+$gray-4: #dcdee0;
+$gray-5: #c8c9cc;
+$gray-6: #969799;
+$gray-7: #646566;
+$gray-8: #323233;
+
+$bg-color: #f8f8f8;
+
+$red: #ee0a24;
+$blue: #1989fa;
+$orange: #ff976a;
+$orange-dark: #ed6a0c;
+$orange-light: #fffbe8;
+$green: #07c160;
+
+// 渐变色
+$gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);
+$gradualOrange: linear-gradient(45deg, #ff9700, #ed1c24);
+$gradualGreen: linear-gradient(45deg, #39b54a, #8dc63f);
+$gradualPink: linear-gradient(45deg, #ec008c, #6739b6);
+$gradualBlue: linear-gradient(45deg, #0081ff, #1cbbb4);
+// 深色背景
+
+// 浅色背景

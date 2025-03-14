@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "本地生活",
+  "usingComponents": {
+    "periphery-lists": "plugin://bdshPlugin/periphery-lists"
+  }
+}

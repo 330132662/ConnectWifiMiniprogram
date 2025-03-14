@@ -1,0 +1,16 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "WiFi连接中",
+  "usingComponents": {
+    "van-loading": "../../libs/vant/loading/index",
+    "van-notice-bar": "../../libs/vant/notice-bar/index",
+    "x-loading": "../../components/common/loading/index",
+    "x-ad": "../../components/common/ad/index",
+    "x-image": "../../components/common/image/index",
+    "x-icon": "../../components/common/icon/index",
+    "x-blink": "../../components/common/blink/index",
+    "x-divider": "../../components/common/divider/index",
+    "x-richtext": "../../components/common/richtext/index",
+    "x-auth-btn": "../../components/common/auth-btn/index"
+  }
+}

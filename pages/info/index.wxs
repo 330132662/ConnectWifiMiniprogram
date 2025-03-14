@@ -1,0 +1,15 @@
+function bg(color = '#1989fa') {
+	return 'background:' + color + ';color:#fff'
+}
+function text(color = '#1989fa') {
+	return 'color:' + color
+}
+function color(color = '#1989fa') {
+	return color
+}
+
+module.exports = {
+	bg: bg,
+	text: text,
+	color: color,
+}

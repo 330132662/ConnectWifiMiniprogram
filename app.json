@@ -1,0 +1,101 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/home/index",
+    "pages/info/index",
+    "pages/agentinfo/index",
+    "pages/deposit/index",
+    "pages/depositlist/index",
+    "pages/merchantlist/index",
+    "pages/nearby/index",
+    "pages/shop/index",
+    "pages/webview/index",
+    "pages/error/index",
+    "pages/hui/index",
+    "pages/mine/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WiFi助手",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#000000",
+    "selectedColor": "#000000",
+    "backgroundColor": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/home/index"
+      },
+      {
+        "pagePath": "pages/nearby/index"
+      },
+      {
+        "pagePath": "pages/hui/index"
+      },
+      {
+        "pagePath": "pages/mine/index"
+      }
+    ]
+  },
+  "style": "v2",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    },
+    "scope.userFuzzyLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "requiredPrivateInfos": ["chooseLocation","getLocation"],
+  "subpackages": [
+    {
+      "root": "wifi",
+      "pages": [
+        "edit/index",
+        "more/index",
+        "tip/index",
+        "help/index",
+        "category/index",
+        "invite/index",
+        "linked/index",
+        "status/index",
+        "apply/index",
+        "applyinvite/index",
+        "manager/index",
+        "member/index",
+        "merchantedit/index",
+        "carousel/index",
+        "relation/index",
+        "list/index"
+      ]
+    },
+    {
+      "root": "coupon",
+      "pages": ["edit/index", "tip/index", "mine/index", "list/index", "check/index", "movie/index"],
+      "plugins": {
+        "jtkMovie": {
+          "version": "1.1.4",
+          "provider": "wx89752980e795bfde"
+        }
+      }
+    },
+    {
+      "root": "hui",
+      "pages": ["meituan/index", "ele/index", "didi/index", "meishi/index", "movie/index"],
+      "plugins": {
+        "meishi": {
+          "version": "1.0.5",
+          "provider": "wx5c787b48e6a02a51"
+        },
+        "bdshPlugin": {
+          "version": "1.1.1",
+          "provider": "wx3451c23b62c65d8a"
+        }
+      }
+    }
+  ],
+  "sitemapLocation": "sitemap.json"
+}

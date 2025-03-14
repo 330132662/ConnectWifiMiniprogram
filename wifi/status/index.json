@@ -1,0 +1,14 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "我的邀请码",
+  "usingComponents": {
+    "van-loading": "../../libs/vant/loading/index",
+    "van-popup": "../../libs/vant/popup/index",
+    "x-loading": "../../components/common/loading/index",
+    "x-poster": "../../components/common/poster/index",
+    "x-image": "../../components/common/image/index",
+    "x-icon": "../../components/common/icon/index",
+    "x-picker-color": "../../components/common/picker-color/index",
+    "x-auth-btn": "../../components/common/auth-btn/index"
+  }
+}

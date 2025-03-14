@@ -1,0 +1,89 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoadinng || fullLoading}}"></x-loading>
+<view class="top" style="{{utils.bg(custom.color)}}">
+  <view class="top-wrapper">
+    <view class="top-cash">
+      <view class="top-cash strong">{{utils.cash(agent.cash_remain)}}</view>
+    </view>
+    <view class="top-label">可提现金额（元）</view>
+  </view>
+</view>
+<view class="tip">
+  <block wx:if="{{agent.cash_today > 0}}">
+    <x-icon x-class="tip-icon" size="29" color="#666" name="info-o"></x-icon>
+    <view class="tip-text">其中 {{utils.cash(agent.cash_today)}}元 需第二天结算单生成后方可提现</view>
+  </block>
+</view>
+<view class="section">
+  <view class="section-title" bind:tap="handle2Agent">
+    <view class="section-title-text">提现渠道</view>
+    <view class="section-title-desc">点击配置提现渠道</view>
+  </view>
+  <view class="section-content">
+    <view wx:if="{{utils.hasOne(custom.deposit_type, 1)}}" class="section-item" data-type="1" bind:tap="selectType">
+      <view class="section-item-label">微信</view>
+      <view class="section-item-right">
+        <x-icon wx:if="{{type==1}}" color="{{utils.color(custom.color)}}" x-class="section-item-icon" size="50" name="radio-selected"></x-icon>
+        <x-icon wx:else color="#ccc" x-class="section-item-icon" size="50" name="radio-unselected"></x-icon>
+      </view>
+    </view>
+    <view wx:if="{{utils.hasOne(custom.deposit_type, 2)}}" class="section-item" data-type="2" bind:tap="selectType">
+      <view class="section-item-label">支付宝</view>
+      <view class="section-item-right">
+        <x-icon wx:if="{{type==2}}" color="{{utils.color(custom.color)}}" x-class="section-item-icon" size="50" name="radio-selected"></x-icon>
+        <x-icon wx:else color="#ccc" x-class="section-item-icon" size="50" name="radio-unselected"></x-icon>
+      </view>
+    </view>
+    <view wx:if="{{utils.hasOne(custom.deposit_type, 3)}}" class="section-item" data-type="3" bind:tap="selectType">
+      <view class="section-item-label">提现到微信零钱</view>
+      <view class="section-item-right">
+        <x-icon wx:if="{{type==3}}" color="{{utils.color(custom.color)}}" x-class="section-item-icon" size="50" name="radio-selected"></x-icon>
+        <x-icon wx:else color="#ccc" x-class="section-item-icon" size="50" name="radio-unselected"></x-icon>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="section">
+  <view class="section-title" bind:tap="handleShowPopup">
+    <view class="section-title-text">提现金额</view>
+    <view class="section-title-icon">
+      <x-icon name="info-o" size="30" color="#ed6a0c"></x-icon>
+    </view>
+  </view>
+  <view class="section-content">
+    <input value="{{cash}}" bindblur="onInputBlur" type="digit" class="section-input" placeholder="满{{custom.deposit_cash || 5}}元可提现" />
+  </view>
+</view>
+<view class="bottom">
+  <view bind:tap="handleDeposit" class="bottom-btn confirm" style="{{utils.bg(custom.color)}}">
+    立即提现
+  </view>
+  <view bind:tap="handleRecord" class="bottom-btn record" style="{{utils.border(custom.color)}}">
+    提现记录
+  </view>
+</view>
+<view wx:if="{{showMiniPopup}}" class="mini">
+  <view class="mini-title">提现说明</view>
+  <view class="mini-content">
+    <view class="mini-item mb">
+      <view class="mini-item-head">1.可提现金额和待提现金额区别</view>
+      <view class="mini-item-content">可提现金额是待提现金额和今日预估收益的累加，因广告收益的不确定性，最终可提现金额以生成的结算单为准;</view>
+    </view>
+    <view class="mini-item mb">
+      <view class="mini-item-head">2.什么时候可以收到佣金</view>
+      <view class="mini-item-content">具体佣金打款时间以平台给出的时间为准，一般是申请审核通过后的1个工作日内完成提现；</view>
+    </view>
+    <view class="mini-item">
+      <view class="mini-item-head">3.什么是提现渠道</view>
+      <view class="mini-item-content">
+        为了资金的安全性，目前的佣金打款方式为手动打款，请如实填写相关信息，因信息错误导致的打款失败，平台有权拒绝或延期打款；
+      </view>
+    </view>
+  </view>
+  <view class="mini-bottom">
+    <view bind:tap="handleCloseMiniPopup" class="mini-bottom-btn" style="{{custom.color ? 'background:'+custom.color : ''}}">
+      我知道了
+    </view>
+  </view>
+</view>
+<view class="mini-mask" wx:if="{{showMiniPopup}}" bind:tap="handleCloseMiniPopup"></view>

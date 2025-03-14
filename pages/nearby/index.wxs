@@ -1,0 +1,34 @@
+function bg(color = '#1989fa') {
+	return 'background:' + color + ';color:#fff'
+}
+function intval(str = '') {
+	var num = parseFloat(str).toFixed(0)
+	if (num < 1000) {
+		if (isNaN(num)) {
+			return ''
+		} else {
+			return num + 'm'
+		}
+	} else {
+		if (isNaN(num)) {
+			return ''
+		} else {
+			return parseFloat((num / 1000).toFixed(1)) + 'km'
+		}
+	}
+}
+function rate(str) {
+	str = +str
+	if (str <= 0 || isNaN(str)) {
+		var result = +(Math.random() * 1) + 4
+		return result.toFixed(2)
+	} else {
+		return str
+	}
+}
+
+module.exports = {
+	bg: bg,
+	intval: intval,
+	rate: rate,
+}

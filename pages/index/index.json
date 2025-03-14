@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "正在加载数据",
+  "usingComponents": {
+    "x-loading": "../../components/common/loading/index"
+  }
+}

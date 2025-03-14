@@ -1,0 +1,15 @@
+<view class="wrapper x-class" style="{{style}}" catch:tap="handleClick">
+  <block wx:if="{{!loading}}">
+    <button wx:if="{{!mobileError && mobile && !userInfo.mobile}}" class="btn-mobile" open-type="getPhoneNumber" catch:getphonenumber="onGetPhoneNumber"></button>
+  </block>
+  <slot></slot>
+</view>
+<view class="popup" wx:if="{{showSettingPopup}}">
+  <image class="popup-logo" src="{{custom.logo}}"></image>
+  <view class="popup-content">图片保存失败</view>
+  <view class="popup-desc">请先授权后再进行操作</view>
+  <button class="popup-btn" style="{{custom.color ? 'background:'+custom.color : ''}}" open-type="openSetting">
+    我知道了
+  </button>
+</view>
+<view wx:if="{{showSettingPopup}}" class="popup-mask" bind:tap="handleCloseMask"></view>

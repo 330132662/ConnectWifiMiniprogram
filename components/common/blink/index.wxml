@@ -1,0 +1,5 @@
+<view class="blink">
+  <view class="blink-word" style="{{bold?'font-weight:bold':''}};{{italic?'font-style:italic':''}};color:{{color}};{{size?'font-size:'+size:''}}" wx:for="{{text}}" wx:key="index">
+    {{item}}
+  </view>
+</view>

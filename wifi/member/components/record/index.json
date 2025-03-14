@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-popup": "../../../../libs/vant/popup/index",
+    "van-tag": "../../../../libs/vant/tag/index",
+    "van-empty": "../../../../libs/vant/empty/index",
+    "van-loading": "../../../../libs/vant/loading/index",
+    "x-icon": "../../../../components/common/icon/index"
+  }
+}

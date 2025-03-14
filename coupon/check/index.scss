@@ -1,0 +1,229 @@
+@import "../../assets/styles/index.scss";
+@import "../../assets/styles/animate.scss";
+
+$topHeight: calc(750rpx * 9 / 16);
+page {
+  padding-bottom: 20rpx;
+  background: $bg-color;
+}
+.top {
+  min-height: $topHeight;
+  &-video {
+    width: 100%;
+    height: 100%;
+  }
+}
+.swiper {
+  height: 100%;
+  &-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.empty {
+      background: #f3f3f3;
+    }
+    &-banner {
+      width: 100%;
+      height: 100%;
+      &-image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &-empty {
+      color: #bbb;
+    }
+  }
+}
+.copyright {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  &-content {
+    height: 50rpx;
+  }
+}
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  box-sizing: border-box;
+  letter-spacing: 2rpx;
+  color: #777;
+  &-item {
+    display: flex;
+    align-items: center;
+    font-size: 24rpx;
+    &-icon {
+      margin-right: 5rpx;
+    }
+  }
+  &-text {
+    @include ellipsis();
+  }
+}
+$formItemHeight: 100rpx;
+.form {
+  margin: 20rpx 30rpx;
+  margin-top: 0;
+  background: #fff;
+  box-shadow: 0 5rpx 20rpx #eee;
+  border-radius: 15rpx;
+  &-item {
+    display: flex;
+    align-items: center;
+    height: $formItemHeight;
+    &:not(:last-child) {
+      border-bottom: 1rpx #eee solid;
+    }
+    &.textarea {
+      min-height: $formItemHeight;
+      box-sizing: border-box;
+      height: auto;
+      align-items: flex-start;
+    }
+    &.upload {
+      box-sizing: border-box;
+      height: auto;
+      align-items: flex-start;
+    }
+    &-tip {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      height: 100%;
+      padding-left: 30rpx;
+      font-size: 25rpx;
+      letter-spacing: 2rpx;
+      color: $primary-color;
+      line-height: 1;
+      vertical-align: bottom;
+      &-icon {
+        margin-right: 10rpx;
+      }
+    }
+    &-label {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 170rpx;
+      flex-shrink: 0;
+      font-size: 29rpx;
+      color: #333;
+      font-weight: bold;
+      @include ellipsis();
+      &.textarea {
+        min-height: $formItemHeight;
+        box-sizing: border-box;
+      }
+      &.upload {
+        min-height: $formItemHeight;
+        box-sizing: border-box;
+      }
+    }
+    &-placeholder {
+      font-size: 31rpx;
+    }
+    &-content {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      overflow-x: hidden;
+      &.textarea {
+        min-height: $formItemHeight;
+        box-sizing: border-box;
+      }
+      &.upload {
+        min-height: $formItemHeight;
+        box-sizing: border-box;
+        padding: 20rpx 0;
+      }
+    }
+    &-input {
+      flex: 1;
+      height: 100%;
+      font-size: 31rpx;
+    }
+    &-right {
+      width: 60rpx;
+      height: 100%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &-upload {
+      position: relative;
+      width: 180rpx;
+      height: 180rpx;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &.add {
+        border: 1px solid #ccc;
+        border-radius: 5rpx;
+      }
+      &-image {
+        width: 100%;
+        height: 100%;
+        &__tag {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50rpx;
+          box-sizing: border-box;
+          background: rgba(0, 0, 0, 0.6);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &__icon {
+          line-height: 1;
+          color: #eee;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+.auth {
+  padding: 30rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &-btn {
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8rpx;
+  }
+}
+.copyright {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40rpx;
+  padding-bottom: 60rpx;
+  padding-top: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  &-content {
+    height: 50rpx;
+  }
+}

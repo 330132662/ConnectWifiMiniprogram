@@ -1,0 +1,44 @@
+var fixz = function fixz(num) {
+	if (num < 10) {
+		return '0' + num
+	}
+	return num
+}
+module.exports = {
+	bg: function (color = '#1989fa') {
+		return 'background:' + color + ';color:#fff'
+	},
+	text: function (color = '#1989fa') {
+		return 'color:' + color
+	},
+	getBoolean: function (str) {
+		return !!+str
+	},
+	has: function has(name, list = []) {
+		return list.indexOf(name) > -1
+	},
+	afterName: function afterName(name) {
+		if (name == 'mini') {
+			return '跳转小程序'
+		} else if (name == 'h5') {
+			return '跳转H5'
+		} else if (name == 'text') {
+			return '弹出文字'
+		} else if (name == 'image') {
+			return '弹出图片'
+		}
+	},
+	formatTime: function formatTime(date) {
+		date = +date
+		var date = getDate(date) //返回当前时间对象
+		var year = date.getFullYear()
+		var month = fixz(date.getMonth() + 1)
+		var day = fixz(date.getDate())
+
+		var hour = fixz(date.getHours())
+		var minute = fixz(date.getMinutes())
+		var second = '00'
+
+		return [year, month, day].join('/')
+	},
+}

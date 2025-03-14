@@ -1,0 +1,82 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<view class="search">
+  <view class="search-wrapper">
+    <view class="search-item m" bind:tap="handleShowActiveList">
+      <view class="search-item-left">
+        <view wx:if="{{search.status==1}}" class="search-item-left-text">待审核</view>
+        <view wx:elif="{{search.status==2}}" class="search-item-left-text">已审核</view>
+        <view wx:else class="search-item-left-text">全部</view>
+      </view>
+      <view class="search-item-right">
+        <x-icon x-class="search-item-right-icon" size="25" name="arrow-down" color="#aaa"></x-icon>
+      </view>
+    </view>
+    <view class="search-item right">
+      <view class="search-item-input">
+        <input class="search-item-input-input" type="text" value="{{search.content}}" placeholder="请输入名字或手机号搜索" bind:input="onInputChange" />
+      </view>
+      <view class="search-item-right-search" bind:tap="handleConfirmSearch">
+        <view class="search-item-right-text">搜索</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="list">
+  <block wx:for="{{list}}" wx:key="index">
+    <view class="item">
+      <view class="item-top" data-item="{{item}}" bind:tap="handleMore">
+        <view class="item-top-left">
+          <x-image x-class="item-top-avatar" src="{{item.avatar}}" fit="aspectFit"></x-image>
+        </view>
+        <view class="item-top-m">
+          <view class="item-top-title">
+            <view class="item-top-title-text strong">{{item.nickname}}</view>
+            <view class="item-top-title-text small">{{item.realname}}</view>
+          </view>
+          <view class="item-top-cell">
+            <view class="item-top-cell-label">手机号码：</view>
+            <view class="item-top-cell-val">{{utils.hidePhone(item.mobile)}}</view>
+          </view>
+          <view class="item-top-cell">
+            <view class="item-top-cell-label">用户类型：</view>
+            <view class="item-top-cell-val">
+              <view wx:if="{{item.role_id==1}}" class="item-top-cell-val-text">
+                {{custom.text_tuan || '团长'}}
+              </view>
+              <view wx:elif="{{item.role_id==2}}" class="item-top-cell-val-text">
+                {{custom.text_tuo || '拓展员'}}
+              </view>
+              <view wx:elif="{{item.role_id==3}}" class="item-top-cell-val-text">
+                {{custom.text_shang || '商家'}}
+              </view>
+              <view class="item-top-cell-val-text">【{{item.percent}}%】</view>
+            </view>
+          </view>
+        </view>
+        <view class="item-top-right">
+          <x-icon x-class="item-top-right-icon" name="arrow-right" color="#aaa" size="29"></x-icon>
+        </view>
+      </view>
+      <view wx:if="{{item.status <= 1}}" class="item-bottom" data-id="{{item.id}}" bind:tap="handleCheckMember">
+        <view class="item-bottom-center">
+          <view class="item-bottom-btn checking">待 审 核</view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <block wx:if="{{loading}}">
+    <view class="loading">
+      <van-loading type="spinner"></van-loading>
+    </view>
+  </block>
+  <block wx:else>
+    <van-empty wx:if="{{!list || !list.length}}" description="未找到团队成员，请换个词搜索试试"></van-empty>
+    <view wx:elif="{{finished}}" class="finished">
+      <view class="finished-text">已全部加载完毕</view>
+    </view>
+  </block>
+</view>
+<van-action-sheet show="{{ showActiveList }}" actions="{{ activeList }}" cancel-text="取消" close-on-click-overlay bind:select="handleActiveSelect" bind:close="handleCloseActiveList" bind:cancel="handleCloseActiveList" />
+<x-record show="{{popupShow}}" detail="{{popupDetail}}" prole="{{memberInfo.role}}" bind:close="onPopupClose" />
+<x-history show="{{popupHistoryShow}}" detail="{{popupHistoryDetail}}" prole="{{memberInfo.role}}" bind:close="onPopupClose" />

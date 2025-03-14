@@ -1,0 +1,224 @@
+@import '../../assets/styles/index.scss';
+@import '../../assets/styles/animate.scss';
+
+.top {
+	height: 350rpx;
+	background: $primary-color;
+	margin-bottom: -200rpx;
+}
+$swiperHeight: 420rpx;
+.swiper {
+	width: 100%;
+	box-sizing: border-box;
+	height: $swiperHeight;
+	&-item {
+		padding: 20rpx;
+		box-sizing: border-box;
+		border-radius: 10rpx;
+		overflow: hidden;
+		&-image {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			border-radius: 10rpx;
+			&.empty-center {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				background: #eee;
+			}
+			&__image {
+				width: 100%;
+				height: 100%;
+				background: #eee;
+			}
+			&__tag {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 80rpx;
+				background: rgba(0, 0, 0, 0.6);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			&__icon {
+				color: #fff;
+				font-weight: bold;
+			}
+			&__text {
+				color: #aaa;
+				font-size: 30rpx;
+				margin-top: 6rpx;
+				letter-spacing: 3rpx;
+			}
+		}
+	}
+}
+.add {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10rpx 40rpx;
+	margin-top: 30rpx;
+	&-btn {
+		font-size: 32rpx;
+		letter-spacing: 2rpx;
+		color: #888;
+		border: 1rpx solid #777;
+		width: 100%;
+		box-sizing: border-box;
+		height: 70rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 6rpx;
+		line-height: 1;
+	}
+}
+$cellHeight: 110rpx;
+$cellTitleSize: 35rpx;
+$cellDescSize: 28rpx;
+$cellLabelHeight: 90rpx;
+.form {
+	margin-top: 30rpx;
+	padding-bottom: 200rpx;
+	box-sizing: border-box;
+	.border {
+		border-bottom: 1rpx solid #e6e6e6;
+		box-sizing: border-box;
+	}
+	&-cell {
+		padding: 0 40rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		&-left {
+			padding: 30rpx 0;
+			padding-right: 20rpx;
+			box-sizing: border-box;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			&-title {
+				font-size: $cellTitleSize;
+				color: #111;
+				margin-bottom: 5rpx;
+				@include ellipsis();
+			}
+			&-desc {
+				font-size: $cellDescSize;
+				color: #666;
+				@include ellipsis();
+			}
+		}
+		&-right {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			height: 120rpx;
+			width: 120rpx;
+			flex-shrink: 0;
+			&-switch {
+				line-height: 1;
+				margin-top: 10rpx;
+			}
+		}
+	}
+	&-item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 30rpx;
+		height: $cellLabelHeight;
+		&-left {
+			width: 200rpx;
+			flex-shrink: 0;
+			padding: 20rpx 0;
+			margin-top: -2.5px;
+			&-label {
+				font-size: $cellTitleSize;
+				@include ellipsis();
+			}
+		}
+		&-right {
+			flex: 1;
+			line-height: 1;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			font-size: $cellDescSize + 3;
+			color: #888;
+			height: $cellLabelHeight;
+			&-label {
+				color: #222;
+				&.gray {
+					color: #aaa;
+				}
+			}
+			&-input {
+				height: 100%;
+				width: 100%;
+				line-height: 1;
+				text-align: right;
+				color: #222;
+				font-size: $cellTitleSize;
+				vertical-align: bottom;
+			}
+		}
+	}
+}
+.center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 160rpx 20rpx;
+	font-size: 32rpx;
+	box-sizing: border-box;
+	&-text {
+		margin-bottom: 20rpx;
+		color: #aaa;
+	}
+}
+.pure-center {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 32rpx;
+	color: #555;
+	box-sizing: border-box;
+	background: #eee;
+}
+.bottom {
+	position: fixed;
+	bottom: 50rpx;
+	left: 50%;
+	width: 100%;
+	transform: translate(-50%, 0);
+	padding: 20rpx 30rpx;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 30rpx;
+	padding-bottom: constant(safe-area-inset-bottom);
+	padding-bottom: env(safe-area-inset-bottom);
+	&-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 690rpx;
+		height: 90rpx;
+		font-size: 40rpx;
+		background: $primary-color;
+		color: #fff;
+		border-radius: 8rpx;
+	}
+}

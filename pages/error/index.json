@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "小程序出错啦",
+  "usingComponents": {
+    "van-empty": "../../libs/vant/empty/index"
+  }
+}

@@ -1,0 +1,6 @@
+{
+	"component": true,
+	"usingComponents": {
+		"x-image": "../image/index"
+	}
+}

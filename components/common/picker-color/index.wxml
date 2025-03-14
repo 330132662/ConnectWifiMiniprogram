@@ -1,0 +1,26 @@
+<view class="dialog {{show ? 'dialog_show' : ''}}">
+  <view wx:if="{{mask}}" class="weui-mask" catchtap="close" catchtouchmove="close"></view>
+  <view class="weui-actionsheet {{show ? 'weui-actionsheet_toggle' : ''}}" catchtouchmove="preventdefault">
+    <view class="weui-half-screen-dialog__hd" style="padding: 0">
+      <view class="weui-half-screen-dialog__hd__side popup-item popup-item__left" bindtap="close">
+        <x-icon x-class="color-icon"  name="cross-o" size="40rpx"></x-icon>
+      </view>
+      <view class="weui-half-screen-dialog__hd__main">
+        <view class="weui-half-screen-dialog__title">拖动滑块可选择颜色</view>
+        <view wx:if="{{!color}}" class="weui-half-screen-dialog__subtitle">拖动下方滑块可选择颜色</view>
+        <view wx:else class="weui-half-screen-dialog__subwrapper">
+          <view class="weui-half-screen-dialog__subtitle">已选颜色：</view>
+          <view class="weui-half-screen-dialog__color" style="background:{{color}}"></view>
+          <view class="weui-half-screen-dialog__subtitle">{{color}}</view>
+        </view>
+      </view>
+      <view class="weui-half-screen-dialog__hd__side popup-item popup-item__right" bindtap="confirm">
+        <x-icon x-class="color-icon" name="success-o" size="40rpx"></x-icon>
+      </view>
+    </view>
+    <movable-area class="target" style="background-image:url({{host+'/static/wifi/image/color_picker_mask.png'}});background-color:{{hueColor}}">
+      <movable-view direction="all" bindchange="changeSV" x="{{x}}" y="{{y}}" animation="{{true}}" class="iconfont icon-ios-locate-outline" bindtouchend="onEnd"></movable-view>
+    </movable-area>
+    <slider bindchange="changeHue" bindchanging="changingHue" data-value="{{hsv.h}}" activeColor="transparent" backgroundColor="transparent" class="ribbon" max="360" value="{{hsv.h}}" block-color="{{color}}" />
+  </view>
+</view>

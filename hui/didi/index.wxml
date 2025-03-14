@@ -1,0 +1,34 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<van-tabs color="#FF9D00" active="{{ currentName }}" bind:click="onTabClick">
+  <van-tab title="滴滴打车" name="42" disabled="{{disabled || loading}}"></van-tab>
+  <van-tab title="花小猪" name="49" disabled="{{disabled || loading}}"></van-tab>
+  <van-tab title="滴滴货运" name="44" disabled="{{disabled || loading}}"></van-tab>
+  <van-tab title="加油代驾" name="67" disabled="{{disabled || loading}}"></van-tab>
+  <van-tab title="高德打车" name="47" disabled="{{disabled || loading}}"></van-tab>
+</van-tabs>
+<x-image wx:if="{{custom}}" bindtap="handleBtnClick" x-class="banner" src="{{custom.host + '/static/wifi/image/banner_didi.png'}}"></x-image>
+<view class="box">
+  <view class="box-item line">
+    <view class="box-item-icon">
+      <x-icon name="pocket" size="50"></x-icon>
+    </view>
+    <view class="box-item-title">领红包</view>
+  </view>
+  <view class="box-item line">
+    <view class="box-item-icon">
+      <x-icon name="order" size="50"></x-icon>
+    </view>
+    <view class="box-item-title">再下单</view>
+  </view>
+  <view class="box-item">
+    <view class="box-item-icon">
+      <x-icon name="coupon" size="50"></x-icon>
+    </view>
+    <view class="box-item-title">享优惠</view>
+  </view>
+</view>
+<view class="code">
+  <x-image wx:if="{{current && current.miniCode}}" previewImage x-class="code-image" src="{{current && current.miniCode}}"></x-image>
+  <view class="code-btn" style="{{utils.bg('#FF9D00')}}" bindtap="handleBtnClick">免费领红包</view>
+</view>

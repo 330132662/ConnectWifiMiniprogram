@@ -1,0 +1,66 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}" />
+<view class="form">
+  <view class="section">
+    <view class="section-form">
+      <!-- 头像 -->
+      <view class="section-form-item start" style="margin-bottom: 50rpx">
+        <view class="section-form-item-left">
+          <view class="section-form-item-left-text">微信头像</view>
+          <!-- <button open-type="chooseAvatar" bindchooseavatar="avatarChoosed" >选择头像</button> -->
+        </view>
+        <view class="section-form-item-right">
+          <view wx:if="{{form.avatar}}" class="section-form-item-right-image">
+            <image data-url="{{form.avatar}}" bind:tap="handlePreviewImage" class="section-form-item-right-image__image" mode="aspectFill" src="{{form.avatar}}"></image>
+            <view data-name="avatar" bind:tap="handleDeleteImage" class="section-form-item-right-image__tag">
+              <x-icon x-class="section-form-item-right-image__icon" name="delete" color="#fff" size="30"></x-icon>
+            </view>
+          </view>
+          <button wx:else class="section-form-item-right-add" data-name="avatar" bind:tap="handleUpload">
+            <x-icon x-class="section-form-item-right-add__icon" name="xiangji" color="#aaa" size="55"></x-icon>
+          </button>
+        </view>
+      </view>
+      <!-- 微信昵称 nickname -->
+      <view class="section-form-item">
+        <view class="section-form-item-left">
+          <view class="section-form-item-left-text">微信昵称</view>
+        </view>
+        <view class="section-form-item-right">
+          <view class="section-form-item-right-field">
+            <input type="nickname" cursor-spacing="50" always-embed data-name="nickname" bindblur="onInputChange" class="section-form-item-right-input" placeholder="请输入您的微信昵称" value="{{form.nickname}}"></input>
+            <view class="section-form-item-right-icon" wx:if="{{form.nickname}}" data-name="nickname" bind:tap="onClearClick">
+              <x-icon class="section-form-item-right-icon__icon" name="clear" size="32" color="#888"></x-icon>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 性别 gender -->
+      <view class="section-form-item">
+        <view class="section-form-item-left">
+          <view class="section-form-item-left-text">性别</view>
+        </view>
+        <view class="section-form-item-right-rgroup">
+          <view bind:tap="onGenderChange" data-v="0" class="section-form-item-right-radio">
+            <x-icon wx:if="{{form.gender==0}}" class="section-form-item-right-ricon" color="{{utils.color(custom.color)}}" name="radio-selected"></x-icon>
+            <x-icon wx:else class="section-form-item-right-ricon" color="#777" name="radio-unselected"></x-icon>
+            <view class="section-form-item-right-rlabel">保密</view>
+          </view>
+          <view bind:tap="onGenderChange" data-v="1" class="section-form-item-right-radio">
+            <x-icon wx:if="{{form.gender==1}}" class="section-form-item-right-ricon" color="{{utils.color(custom.color)}}" name="radio-selected"></x-icon>
+            <x-icon wx:else class="section-form-item-right-ricon" color="#777" name="radio-unselected"></x-icon>
+            <view class="section-form-item-right-rlabel">男</view>
+          </view>
+          <view bind:tap="onGenderChange" data-v="2" class="section-form-item-right-radio">
+            <x-icon wx:if="{{form.gender==2}}" class="section-form-item-right-ricon" color="{{utils.color(custom.color)}}" name="radio-selected"></x-icon>
+            <x-icon wx:else class="section-form-item-right-ricon" color="#777" name="radio-unselected"></x-icon>
+            <view class="section-form-item-right-rlabel">女</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="bottom">
+  <view style="{{utils.bg(custom.color)}}" bind:tap="handleConfirm" class="bottom-btn">保存</view>
+</view>

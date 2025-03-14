@@ -1,0 +1,27 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<view class="item" wx:for="{{list}}" wx:key="index">
+  <view class="item-left">
+    <x-image x-class="item-left-image" src="{{custom.form_icon.yjtxsq}}"></x-image>
+  </view>
+  <view class="item-m">
+    <view class="item-m-title">佣金提现申请</view>
+    <view class="item-m-tip">{{item.create_time}}</view>
+  </view>
+  <view class="item-right">
+    <view class="item-right-price">{{item.cash}} 元</view>
+    <view wx:if="{{item.status == 1}}" class="item-right-tag resolve">已打款</view>
+    <view wx:else class="item-right-tag pending">待打款</view>
+  </view>
+</view>
+<block wx:if="{{loading}}">
+  <view class="loading">
+    <van-loading type="spinner"></van-loading>
+  </view>
+</block>
+<block wx:else>
+  <van-empty wx:if="{{!list || !list.length}}" description="暂无提现记录"></van-empty>
+  <view wx:elif="{{finished && list.length >= 3}}" class="finished">
+    <view class="finished-text">已全部加载完毕</view>
+  </view>
+</block>

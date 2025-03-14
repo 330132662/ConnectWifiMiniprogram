@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "componentGenerics": {
+    "item-top": true,
+    "item-view": true,
+    "item-bottom": true
+  },
+  "usingComponents": {}
+}

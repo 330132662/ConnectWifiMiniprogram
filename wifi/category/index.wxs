@@ -1,0 +1,20 @@
+function bg(color = '#1989fa') {
+	return 'background:' + color + ';color:#fff'
+}
+function text(color = '#1989fa') {
+	return 'color:' + color
+}
+function intval(str = '') {
+	var num = str.toFixed(0)
+	if (num < 1000) {
+		return num + 'm'
+	} else {
+		return parseFloat((num / 1000).toFixed(1)) + 'km'
+	}
+}
+
+module.exports = {
+	bg: bg,
+	text: text,
+	intval: intval,
+}

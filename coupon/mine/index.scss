@@ -1,0 +1,117 @@
+@import '../../assets/styles/index.scss';
+@import '../../assets/styles/animate.scss';
+
+$couponColor: #db6f3f;
+page {
+	padding-bottom: 30rpx;
+	padding-bottom: calc(constant(safe-area-inset-bottom) + 10rpx);
+	padding-bottom: calc(env(safe-area-inset-bottom) + 10rpx);
+}
+.list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 20rpx;
+}
+.loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20rpx;
+	box-sizing: border-box;
+}
+.popup {
+	width: 600rpx;
+	height: 630rpx;
+	background: #fff;
+	border-radius: 10rpx;
+	&-head {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 20rpx;
+		&-title {
+			font-size: 35rpx;
+			font-weight: bold;
+		}
+	}
+	&-content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	&-bottom {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: 30rpx;
+		&-text {
+			font-size: 25rpx;
+			color: #999;
+		}
+	}
+}
+$itemHeight: 210rpx;
+.item {
+	width: 690rpx;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	padding: 20rpx;
+	box-sizing: border-box;
+	margin-bottom: 30rpx;
+	border-radius: 10rpx;
+	overflow: hidden;
+	height: $itemHeight;
+	&-bg {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: $couponColor;
+		opacity: 0.3;
+		z-index: -1;
+	}
+	&-left {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		flex: 1;
+		height: 100%;
+	}
+	&-right {
+		width: 200rpx;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		height: 100%;
+		&-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 150rpx;
+			height: 60rpx;
+			border-radius: 60rpx;
+			background: $couponColor;
+			font-size: 25rpx;
+			color: #fff;
+		}
+	}
+	&-name {
+		font-size: 32rpx;
+		color: #111;
+		@include ellipsis();
+	}
+	&-desc {
+		font-size: 24rpx;
+		color: #333;
+		@include ellipsis();
+	}
+	&-bottom {
+		display: flex;
+		flex-direction: column;
+		font-size: 24rpx;
+	}
+}

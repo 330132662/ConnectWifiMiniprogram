@@ -1,0 +1,125 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || fullLoading}}"></x-loading>
+<view class="top {{custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video ? 'ad' : ''}}">
+  <block wx:if="{{!singlePage && custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video}}">
+    <x-ad x-class="top-ad" type="video" unitId="{{custom.form_ad.ad_video}}"></x-ad>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'image'}}">
+    <swiper class="swiper" autoplay circular>
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" image-class="swiper-item-banner-image" fit="aspectFill" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <block wx:else>
+        <swiper-item class="swiper-item empty">
+          <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'video'}}">
+    <video wx:if="{{custom.video}}" unit-id="{{custom.form_ad.ad_tiepian || ''}}" class="top-video" muted="{{true}}" show-mute-btn="{{true}}" src="{{custom.video}}" autoplay binderror="onVideoError" loop show-fullscreen-btn="{{false}}" show-center-play-btn="{{false}}" enable-play-gesture="{{true}}" object-fit="cover"></video>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </block>
+  <view wx:else class="swiper">
+    <view wx:if="{{!userInfo.openid}}" class="swiper-item center">
+      <view class="swiper-item-empty">登录后可查看详情</view>
+    </view>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </view>
+</view>
+<van-notice-bar custom-class="notice" wx:if="{{custom.form_notice}}" left-icon="volume-o" text="{{custom.form_notice}}" />
+<view wx:if="{{groupList && groupList.length}}" class="grid">
+  <x-auth-btn x-class="grid-item" wx:for="{{groupList}}" wx:key="index" data-item="{{item}}" bind:click="handleCategoryClick">
+    <view class="grid-item-wrapper">
+      <x-image width="100rpx" height="100rpx" x-class="grid-item-image" src="{{item.logo}}"></x-image>
+      <view class="grid-item-label">{{item.name}}</view>
+    </view>
+  </x-auth-btn>
+</view>
+<view wx:if="{{list && list.length}}" class="nearby">
+  <x-divider type="image" style="margin-top: 30rpx;">
+    <x-blink text="附近优质门店" color="#bbb" size="38rpx" />
+  </x-divider>
+  <van-tabs active="{{ activeTabIndex }}" class="nearby-tabs" color="{{custom.color}}">
+    <van-tab title="距您最近"></van-tab>
+    <van-tab title="推荐排序"></van-tab>
+    <van-tab title="人气优选"></van-tab>
+  </van-tabs>
+</view>
+<view class="list">
+  <block wx:for="{{list}}" wx:key="index">
+    <x-auth-btn x-class="item" wx:key="index" data-item="{{item}}" catch:click="handleMerchantClick">
+      <view class="item-wrapper">
+        <view class="item-left">
+          <x-image width="150rpx" height="150rpx" custom-class="item-left-image" src="{{item.logo}}"></x-image>
+        </view>
+        <view class="item-right">
+          <view class="item-right-top">
+            <view class="item-right-name">{{item.name}}</view>
+            <view class="item-right-meter" catch:tap="handle2Locate" data-item="{{item}}">
+             距您{{utils.intval(item.distance)}}
+            </view>
+          </view>
+          <view wx:if="{{item.tags && item.tags.length}}" class="item-right-m">
+            <view class="item-right-m-tag" wx:for="{{item.tags}}" wx:key="index" style="{{item.color?'background:'+item.color:''}}">
+              <view class="item-right-m-tag-text">{{item.name}}</view>
+            </view>
+          </view>
+          <view wx:elif="{{item.remark}}" class="item-right-m">
+            <view class="item-right-m-remark">{{item.remark || ''}}</view>
+          </view>
+          <view wx:else class="item-right-rate">
+            <van-rate value="{{utils.rate(item.rate)}}" readonly allow-half size="12" color="#F2A93B" />
+            <view class="item-right-rate-text">{{utils.rate(item.rate)}}分</view>
+          </view>
+          <!--  -->
+          <view wx:if="{{item.address}}" class="item-right-locate">
+            <x-icon x-class="item-right-icon" name="navigate" size="26" color="#666"></x-icon>
+            <view class="item-right-address">{{item.address}}</view>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{custom}}" class="item-service">
+        <view class="item-service-wrapper">
+          <x-image x-class="item-service-icon" src="{{custom.host + '/static/wifi/image/icon_mian.png'}}"></x-image>
+          <view class="item-service-text">优惠券</view>
+        </view>
+        <view class="item-service-wrapper">
+          <x-image x-class="item-service-icon" src="{{custom.host + '/static/wifi/image/icon_wifi.png'}}"></x-image>
+          <view class="item-service-text">WiFi</view>
+        </view>
+        <view class="item-service-wrapper">
+          <x-image x-class="item-service-icon" src="{{custom.host + '/static/wifi/image/icon_zhifubao.png'}}"></x-image>
+          <view class="item-service-text">支付宝</view>
+        </view>
+        <view class="item-service-wrapper">
+          <x-image x-class="item-service-icon" src="{{custom.host + '/static/wifi/image/icon_wechat.png'}}"></x-image>
+          <view class="item-service-text">微信</view>
+        </view>
+      </view>
+      <view wx:if="{{item.coupon && item.coupon.length}}" class="coupon">
+        <block wx:for="{{item.coupon}}" wx:for-index="i" wx:for-item="val" wx:key="i">
+          <view wx:if="{{i <= 3}}" class="coupon-item">
+            <view class="coupon-item-icon animated pulse infinite">惠</view>
+            <view class="coupon-item-text">{{val.name}}</view>
+          </view>
+        </block>
+      </view>
+    </x-auth-btn>
+    <view wx:if="{{custom.form_ad.ad_banner_active && custom.form_ad.ad_banner && (index+1) % 5 == 0}}" class="ad-center">
+      <ad unit-id="{{custom.form_ad.ad_banner}}"></ad>
+    </view>
+  </block>
+  <view wx:if="{{loading}}" class="loading">
+    <van-loading type="spinner"></van-loading>
+  </view>
+  <view wx:elif="{{!list || !list.length}}" class="empty">
+    <van-empty description="附近未发现任何商家"></van-empty>
+  </view>
+</view>

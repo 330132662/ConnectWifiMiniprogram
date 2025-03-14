@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "帮助中心",
+  "usingComponents": {
+    "x-loading": "../../components/common/loading/index",
+    "x-richtext": "../../components/common/richtext/index"
+  }
+}

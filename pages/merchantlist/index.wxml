@@ -1,0 +1,61 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<view class="search">
+  <view class="search-wrapper">
+    <view class="search-input">
+      <input class="search-input-input" type="text" value="{{search}}" placeholder="请输入门店名称搜索" bind:input="onInputChange" />
+      <view wx:if="{{search}}" class="search-input-right" bind:tap="onInputClear">
+        <x-icon x-class="search-input-icon" name="clear" color="#999" size="30"></x-icon>
+      </view>
+    </view>
+    <x-auth-btn x-class="search-right" bind:click="handleConfirmSearch">
+      <view class="search-right-btn" style="{{utils.bg(custom.color)}}">搜索</view>
+    </x-auth-btn>
+  </view>
+</view>
+<view class="list">
+  <block wx:if="{{list && list.length}}">
+    <van-swipe-cell id="swiper_{{item.id}}" data-item="{{item}}" bind:click="handleSwiperClick" bind:open="handleSwiperOpen" bind:close="handleSwiperClose" disabled="{{listLoading}}" wx:for="{{list}}" wx:key="index" name="{{item.id}}" right-width="{{ 80 }}">
+      <view class="section" bind:tap="handleEditClick" data-id="{{item.id}}">
+        <view class="section-left">
+          <x-image x-class="section-left-image" src="{{item.logo}}" fit="aspectFill"></x-image>
+        </view>
+        <view class="section-right">
+          <view class="section-right-title">{{item.name}}</view>
+          <view class="section-right-content">
+            <view class="section-right-line">
+              <view class="section-right-line-label">关联WiFi:</view>
+              <view wx:if="{{item.total > 0}}" class="section-right-line-val">{{item.total}}个</view>
+              <view wx:else class="section-right-line-val">0 个</view>
+            </view>
+            <view wx:if="{{item.address}}" class="section-right-line">
+              <view class="section-right-line-label">门店地址:</view>
+              <view class="section-right-line-val">{{item.address}}</view>
+            </view>
+            <view wx:elif="{{item.desc}}" class="section-right-line">
+              <view class="section-right-line-label">门店描述:</view>
+              <view class="section-right-line-val">{{item.desc}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view slot="right" class="section-delete">
+        <x-icon class="section-delete-icon" name="delete" color="#fff" size="55"></x-icon>
+      </view>
+    </van-swipe-cell>
+  </block>
+  <block wx:if="{{loading}}">
+    <view class="loading">
+      <van-loading type="spinner"></van-loading>
+    </view>
+  </block>
+  <block wx:else>
+    <van-empty wx:if="{{!list || !list.length}}" description="未找到相关数据，请换个词搜索试试"></van-empty>
+    <view wx:elif="{{finished && list.length >= 3}}" class="finished">
+      <view class="finished-text">已全部加载完毕</view>
+    </view>
+  </block>
+</view>
+<view class="bottom">
+  <view class="bottom-btn" style="{{utils.bg(custom.color)}}" bind:tap="handleNew">添加门店</view>
+</view>

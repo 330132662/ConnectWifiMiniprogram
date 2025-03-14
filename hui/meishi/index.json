@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "外卖美食团购",
+  "usingComponents": {
+    "meituan-list": "plugin://meishi/meituan-shop",
+    "meituan-shop": "plugin://meishi/meituan-list",
+    "meituan-seckill": "plugin://meishi/meituan-seckill",
+    "x-loading": "../../components/common/loading/index"
+  }
+}

@@ -1,0 +1,3 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}" white></x-loading>
+<x-richtext class="" content="{{custom.help}}"></x-richtext>

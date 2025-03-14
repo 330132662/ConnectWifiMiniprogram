@@ -1,0 +1,33 @@
+<van-popup custom-class="popup" position="bottom" round close-on-click-overlay bind:click-overlay="handleClosePopup" show="{{ showPopup }}">
+  <view class="popup-head">
+    <view class="popup-head-title">关联门店</view>
+    <view class="popup-head-icon" bind:tap="handleClosePopup">
+      <van-icon name="cross"></van-icon>
+    </view>
+  </view>
+  <scroll-view bindscrolltolower="onScrollBottom" scroll-y class="popup-content" enable-flex>
+    <view class="popup-gutter" style="height: 130rpx"></view>
+    <view class="popup-item" wx:for="{{list}}" wx:key="index" data-item="{{item}}" bind:tap="handleSelect">
+      <view class="popup-item-left">
+        <x-image width="120rpx" height="120rpx" custom-class="popup-item-image" src="{{item.logo}}"></x-image>
+      </view>
+      <view class="popup-item-content">
+        <view class="popup-item-name">{{item.name}}</view>
+        <view class="popup-item-desc">{{item.remark || item.desc || ''}}</view>
+      </view>
+      <view class="popup-item-right">
+        <x-icon x-class="popup-item-right-icon" name="arrow-right" color="#aaa"></x-icon>
+      </view>
+    </view>
+    <view wx:if="{{loading}}" class="popup-loading">
+      <van-loading type="spinner"></van-loading>
+    </view>
+    <block wx:else>
+      <van-empty wx:if="{{!list || !list.length}}" description="未找到门店分类"></van-empty>
+      <view wx:elif="{{list.length > 3 && finished}}" class="popup-loading">
+        <x-divider desc="已全部加载完毕"></x-divider>
+      </view>
+    </block>
+    <view class="popup-gutter" style="height: 20rpx;"></view>
+  </scroll-view>
+</van-popup>

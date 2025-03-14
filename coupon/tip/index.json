@@ -1,0 +1,14 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "van-loading": "../../libs/vant/loading/index",
+    "van-icon": "../../libs/vant/icon/index",
+    "x-loading": "../../components/common/loading/index",
+    "x-ad": "../../components/common/ad/index",
+    "x-image": "../../components/common/image/index",
+    "x-icon": "../../components/common/icon/index",
+    "x-divider": "../../components/common/divider/index",
+    "x-auth-btn": "../../components/common/auth-btn/index"
+  }
+}

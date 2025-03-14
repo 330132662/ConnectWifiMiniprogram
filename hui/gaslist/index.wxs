@@ -1,0 +1,41 @@
+function bg(color = '#1989fa') {
+	return 'background:' + color + ';color:#fff'
+}
+function text(color = '#1989fa') {
+	return 'color:' + color
+}
+function border(color = '#1989fa') {
+	return 'border:1px solid ' + color + ';color:' + color
+}
+function dis(str = '') {
+	var num = (+str * 1000).toFixed(3)
+	if (num < 1000) {
+		if (isNaN(num)) {
+			return ''
+		} else {
+			return num + 'm'
+		}
+	} else {
+		if (isNaN(num)) {
+			return ''
+		} else {
+			return parseFloat((num / 1000).toFixed(2)) + 'km'
+		}
+	}
+}
+function price(str = '') {
+	var num = (+str / 100).toFixed(2)
+	if (isNaN(num)) {
+		return ''
+	} else {
+		return num
+	}
+}
+
+module.exports = {
+	border: border,
+	bg: bg,
+	text: text,
+	dis: dis,
+	price: price,
+}

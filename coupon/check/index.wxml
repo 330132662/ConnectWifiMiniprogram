@@ -1,0 +1,2 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || loading}}"></x-loading>

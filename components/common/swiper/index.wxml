@@ -1,0 +1,11 @@
+<view class="page">
+  <item-top class="item-top" item="{{swiperList[swiperCurrent]}}"></item-top>
+  <swiper class="swiper" duration="{{swiperDuration}}" current="{{swiperCurrent}}" bindchange="swiperChange" circular>
+    <swiper-item wx:key="index" wx:for="{{swiperList}}" data-index="{{item.index}}">
+      <scroll-view wx:if="{{item}}" enable-back-to-top scroll-with-animation style="height: 100%" class="" scroll-y show-scrollbar="{{false}}" enhanced>
+        <item-view item="{{item}}"></item-view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+  <item-bottom class="item-bottom" item="{{swiperList[swiperCurrent]}}"></item-bottom>
+</view>

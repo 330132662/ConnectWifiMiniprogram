@@ -1,0 +1,5 @@
+<meituan-seckill data="{{ options }}"></meituan-seckill>
+<view style="height: 30rpx"></view>
+<meituan-list data="{{ options }}"></meituan-list>
+<view style="height: 30rpx"></view>
+<meituan-shop data="{{ options }}"></meituan-shop>

@@ -1,0 +1,97 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || fullLoading}}" />
+<view class="form">
+  <view class="section">
+    <view class="section-title">
+      <view class="section-title-text">个人信息</view>
+    </view>
+    <view class="section-form">
+      <!-- 真实姓名 real_name -->
+      <view class="section-form-item">
+        <view class="section-form-item-left">
+          <view class="section-form-item-left-text">真实姓名</view>
+        </view>
+        <view class="section-form-item-right">
+          <view class="section-form-item-right-field">
+            <input type="text" cursor-spacing="50" always-embed data-name="realname" bindinput="onInputChange" class="section-form-item-right-input" placeholder="请输入您的真实姓名" value="{{form.realname}}"></input>
+            <view class="section-form-item-right-icon" wx:if="{{form.realname}}" data-name="realname" bind:tap="onClearClick">
+              <x-icon class="section-form-item-right-icon__icon" name="clear" size="32" color="#888"></x-icon>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 性别 gender -->
+      <view class="section-form-item">
+        <view class="section-form-item-left">
+          <view class="section-form-item-left-text">性别</view>
+        </view>
+        <view class="section-form-item-right">
+          <van-radio-group style="width:100%;" value="{{ form.gender }}" bind:change="onGenderChange" direction="horizontal">
+            <van-radio label-class="section-form-item-right-radiolabel" use-icon-slot style="margin-right:80rpx" custom-class="{{form.gender == 1 ? 'active' : ''}} section-form-item-right-radio" checked-color="{{custom.color}}" icon-size="40rpx" name="1">
+              <view class="{{form.gender == 1 ? 'active' : ''}} section-form-item-rtext">男</view>
+            </van-radio>
+            <van-radio label-class="section-form-item-right-radiolabel" use-icon-slot custom-class="{{form.gender == 2 ? 'active' : ''}} section-form-item-right-radio" checked-color="{{custom.color}}" icon-size="40rpx" name="2">
+              <view class="{{form.gender == 2 ? 'active' : ''}} section-form-item-rtext">女</view>
+            </van-radio>
+          </van-radio-group>
+        </view>
+      </view>
+      <!-- 手机号 mobile -->
+      <view class="section-form-item">
+        <view class="section-form-item-left">
+          <view class="section-form-item-left-text">手机号</view>
+        </view>
+        <view class="section-form-item-right">
+          <view class="section-form-item-right-field">
+            <input type="number" cursor-spacing="50" always-embed data-name="mobile" bindinput="onInputChange" class="section-form-item-right-input" placeholder="请输入您的手机号" value="{{form.mobile}}"></input>
+            <view class="section-form-item-right-icon" wx:if="{{form.mobile}}" data-name="mobile" bind:tap="onClearClick">
+              <x-icon class="section-form-item-right-icon__icon" name="clear" size="32" color="#888"></x-icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{userInfo.agent_id}}" class="section">
+    <view class="section-title">
+      <view class="section-title-text">提现渠道</view>
+    </view>
+    <view class="section-form">
+      <view class="section-form-item start" style="margin-bottom: 50rpx">
+        <view class="section-form-item-left">
+          <view class="section-form-item-left-text">微信</view>
+        </view>
+        <view class="section-form-item-right">
+          <view wx:if="{{form.image_wechat}}" class="section-form-item-right-image">
+            <image data-url="{{form.image_wechat}}" bind:tap="handlePreviewImage" class="section-form-item-right-image__image" mode="aspectFill" src="{{form.image_wechat}}"></image>
+            <view data-name="image_wechat" bind:tap="handleDeleteImage" class="section-form-item-right-image__tag">
+              <x-icon x-class="section-form-item-right-image__icon" name="delete" color="#fff" size="30"></x-icon>
+            </view>
+          </view>
+          <view wx:else class="section-form-item-right-add" data-name="image_wechat" bind:tap="handleUpload">
+            <x-icon x-class="section-form-item-right-add__icon" name="xiangji" color="#aaa" size="55"></x-icon>
+          </view>
+        </view>
+      </view>
+      <view class="section-form-item start">
+        <view class="section-form-item-left">
+          <view class="section-form-item-left-text">支付宝</view>
+        </view>
+        <view class="section-form-item-right">
+          <view wx:if="{{form.image_ali}}" class="section-form-item-right-image">
+            <image data-url="{{form.image_ali}}" bind:tap="handlePreviewImage" class="section-form-item-right-image__image" mode="aspectFill" src="{{form.image_ali}}"></image>
+            <view data-name="image_ali" bind:tap="handleDeleteImage" class="section-form-item-right-image__tag">
+              <x-icon x-class="section-form-item-right-image__icon" name="delete" color="#fff" size="30"></x-icon>
+            </view>
+          </view>
+          <view wx:else class="section-form-item-right-add" data-name="image_ali" bind:tap="handleUpload">
+            <x-icon x-class="section-form-item-right-add__icon" name="xiangji" color="#aaa" size="55"></x-icon>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="bottom">
+  <view bind:tap="handleConfirm" class="bottom-btn">保存设置</view>
+</view>

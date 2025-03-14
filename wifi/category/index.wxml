@@ -1,0 +1,53 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<view class="list">
+  <block wx:for="{{list}}">
+    <x-auth-btn x-class="item" wx:key="index" data-item="{{item}}" bind:click="handleMerchantClick">
+      <view class="item-wrapper">
+        <view class="item-left">
+          <x-image width="150rpx" height="150rpx" custom-class="item-left-image" src="{{item.logo}}"></x-image>
+        </view>
+        <view class="item-right">
+          <view class="item-right-top">
+            <view class="item-right-name">{{item.name}}</view>
+            <view class="item-right-meter" catch:tap="handle2Locate" data-item="{{item}}">
+              {{utils.intval(item.distance)}}
+            </view>
+          </view>
+          <view wx:if="{{item.tags && item.tags.length}}" class="item-right-m">
+            <view class="item-right-m-tag" wx:for="{{item.tags}}" wx:key="index" style="{{item.color?'background:'+item.color:''}}">
+              <view class="item-right-m-tag-text">{{item.name}}</view>
+            </view>
+          </view>
+          <view wx:elif="{{item.remark}}" class="item-right-m">
+            <view class="item-right-m-remark">{{item.remark || ''}}</view>
+          </view>
+          <view wx:if="{{item.address}}" class="item-right-locate" catch:tap="handle2Locate" data-item="{{item}}">
+            <x-icon x-class="item-right-icon" name="navigate" size="26" color="#666"></x-icon>
+            <view class="item-right-address">{{item.address}}</view>
+          </view>
+          <view wx:else class="item-right-desc">{{item.desc}}</view>
+        </view>
+      </view>
+      <view wx:if="{{item.coupon && item.coupon.length}}" class="coupon">
+        <block wx:for="{{item.coupon}}" wx:for-index="i" wx:for-item="val" wx:key="i">
+          <view wx:if="{{i <= 3}}" class="coupon-item">
+            <view class="coupon-item-icon">惠</view>
+            <view class="coupon-item-text">{{val.name}}</view>
+          </view>
+        </block>
+      </view>
+    </x-auth-btn>
+    <block wx:if="{{(index) % 10 == 0}}">
+      <view wx:if="{{custom.form_ad.ad_banner_active && custom.form_ad.ad_banner}}" class="ad-center">
+        <ad unit-id="{{custom.form_ad.ad_banner}}"></ad>
+      </view>
+    </block>
+  </block>
+  <view wx:if="{{loading}}" class="loading">
+    <van-loading type="spinner"></van-loading>
+  </view>
+  <view wx:elif="{{!list || !list.length}}" class="empty">
+    <van-empty description="当前分类下暂无门店"></van-empty>
+  </view>
+</view>

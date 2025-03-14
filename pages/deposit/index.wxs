@@ -1,0 +1,38 @@
+function bg(color = '#1989fa') {
+	return 'background:' + color
+}
+function border(color = '#1989fa') {
+	return 'border-color:' + color + ';color:' + color
+}
+function color(color = '#1989fa') {
+	return color
+}
+function cash(str) {
+	if (str == 0) {
+		return '0.00'
+	} else {
+		str = Number(str)
+		if (isNaN(str)) {
+			return '0.00'
+		} else {
+			str = parseFloat(str.toFixed(2))
+			return str
+		}
+	}
+}
+function hasOne(arr = [], val = '') {
+	var flag = false
+	for (var i = 0; i < arr.length; i++) {
+		if (arr[i] == val) {
+			flag = true
+		}
+	}
+	return flag
+}
+module.exports = {
+	bg: bg,
+	border: border,
+	color: color,
+	cash: cash,
+	hasOne: hasOne,
+}

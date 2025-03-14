@@ -1,0 +1,9 @@
+@import './variables/_index.scss';
+@import './mixins/_index.scss';
+
+.nav-left {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+}

@@ -1,0 +1,16 @@
+@import "../../../assets/styles/index.scss";
+
+$topHeight: calc(750rpx * 9 / 16);
+.ad {
+  height: 100%;
+}
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $topHeight;
+  &-text {
+    font-size: 29rpx;
+    color: #ccc;
+  }
+}

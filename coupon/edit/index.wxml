@@ -1,0 +1,142 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || loading}}"></x-loading>
+<view class="section">
+  <view class="section-title">
+    <view class="section-title-text">基础设置</view>
+  </view>
+  <view class="section-form">
+    <view class="section-form-item">
+      <view class="section-form-item-left">
+        <view class="section-form-item-left-text">优惠券名称</view>
+      </view>
+      <view class="section-form-item-right">
+        <view class="section-form-item-right-field">
+          <input type="text" cursor-spacing="50" always-embed data-name="name" bindinput="onInputChange" class="section-form-item-right-input" placeholder="请填写优惠券名称" value="{{coupon.name}}"></input>
+          <view class="section-form-item-right-icon" wx:if="{{coupon.name}}" data-name="name" bind:tap="onClearClick">
+            <x-icon class="section-form-item-right-icon__icon" name="clear" size="32" color="#888"></x-icon>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="section-form-item start">
+      <view class="section-form-item-left">
+        <view class="section-form-item-left-text">优惠券描述</view>
+      </view>
+      <view class="section-form-item-right">
+        <view class="section-form-item-right-field auto">
+          <textarea maxlength="-1" disable-default-padding auto-height cursor-spacing="50" always-embed data-name="desc" bindinput="onInputChange" class="section-form-item-right-input" placeholder="请填写优惠券描述" value="{{coupon.desc}}"></textarea>
+          <view class="section-form-item-right-icon" wx:if="{{coupon.desc}}" data-name="desc" bind:tap="onClearClick">
+            <x-icon class="section-form-item-right-icon__icon" name="clear" size="32" color="#888"></x-icon>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="section-form-item">
+      <view class="section-form-item-left">
+        <view class="section-form-item-left-text">优惠券库存</view>
+      </view>
+      <view class="section-form-item-right">
+        <view class="section-form-item-right-field" style="text-align:right;padding-right:0">
+          <van-stepper data-name="stock" step="1" plus-class="dialog-step-plus" minus-class="dialog-step-minus" input-class="dialog-step-input" integer min="1" max="99999" input-width="150rpx" button-size="65rpx" value="{{coupon.stock || 1}}" bind:change="onStepChange" />
+        </view>
+      </view>
+    </view>
+    <view class="section-form-item">
+      <view class="section-form-item-left">
+        <view class="section-form-item-left-text">优惠券排序</view>
+      </view>
+      <view class="section-form-item-right">
+        <view class="section-form-item-right-field" style="text-align:right;padding-right:0">
+          <van-stepper data-name="rank" step="1" plus-class="dialog-step-plus" minus-class="dialog-step-minus" input-class="dialog-step-input" integer min="0" max="99999" input-width="150rpx" button-size="65rpx" value="{{coupon.rank || 0}}" bind:change="onStepChange" />
+        </view>
+      </view>
+    </view>
+    <view class="section-form-item">
+      <view class="section-form-item-left">
+        <view class="section-form-item-left-text">限制每人领取</view>
+      </view>
+      <view class="section-form-item-right">
+        <view class="section-form-item-right-field" style="text-align:right;padding-right:0">
+          <van-stepper data-name="limit" step="1" plus-class="dialog-step-plus" minus-class="dialog-step-minus" input-class="dialog-step-input" integer min="0" max="99999" input-width="150rpx" button-size="65rpx" value="{{coupon.limit || 0}}" bind:change="onStepChange" />
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="section">
+  <view class="section-title">
+    <view class="section-title-text">其他设置</view>
+  </view>
+  <view class="section-content">
+    <view class="section-content-item">
+      <view class="section-content-left">
+        <view class="section-content-left-title">是否开启优惠券【领取】时间限制</view>
+        <view class="section-content-left-desc">用户仅允许在规定的时间内领取优惠券</view>
+      </view>
+      <view data-name="get_active" bind:tap="handleToggleSwitch" class="section-content-right">
+        <van-switch active-color="{{custom.color || '#1989fa'}}" inactive-color="#eee" checked="{{ coupon.get_active == 1 }}" size="50rpx" />
+      </view>
+    </view>
+    <block wx:if="{{coupon.get_active == 1}}">
+      <view class="section-content-wrapper" data-name="get_begin" bind:tap="onShowPopup">
+        <view class="section-content-label">开始时间</view>
+        <view class="section-content-value">
+          <view wx:if="{{coupon.get_begin}}" class="section-content-value-text">
+            {{utils.formatTime(coupon.get_begin)}}
+          </view>
+          <view wx:else class="section-content-value-text placeholder">点击设置开始领取时间</view>
+          <x-icon x-class="section-content-value-icon" name="arrow-right" size="28" color="#999"></x-icon>
+        </view>
+      </view>
+      <view class="section-content-wrapper" data-name="get_end" bind:tap="onShowPopup">
+        <view class="section-content-label">结束时间</view>
+        <view class="section-content-value">
+          <view wx:if="{{coupon.get_end}}" class="section-content-value-text">
+            {{utils.formatTime(coupon.get_end)}}
+          </view>
+          <view wx:else class="section-content-value-text placeholder">点击设置结束领取时间</view>
+          <x-icon x-class="section-content-value-icon" name="arrow-right" size="28" color="#888"></x-icon>
+        </view>
+      </view>
+    </block>
+    <view class="section-content-item">
+      <view class="section-content-left">
+        <view class="section-content-left-title">是否开启优惠券【使用】时间限制</view>
+        <view class="section-content-left-desc">用户仅允许在规定的时间内使用优惠券</view>
+      </view>
+      <view data-name="use_active" bind:tap="handleToggleSwitch" class="section-content-right">
+        <van-switch active-color="{{custom.color || '#1989fa'}}" inactive-color="#eee" checked="{{ coupon.use_active == 1 }}" size="50rpx" />
+      </view>
+    </view>
+    <block wx:if="{{coupon.use_active == 1}}">
+      <view class="section-content-wrapper" data-name="use_begin" bind:tap="onShowPopup">
+        <view class="section-content-label">开始时间</view>
+        <view class="section-content-value">
+          <view wx:if="{{coupon.use_begin}}" class="section-content-value-text">
+            {{utils.formatTime(coupon.use_begin)}}
+          </view>
+          <view wx:else class="section-content-value-text placeholder">点击设置开始使用时间</view>
+          <x-icon x-class="section-content-value-icon" name="arrow-right" size="28" color="#888"></x-icon>
+        </view>
+      </view>
+      <view class="section-content-wrapper" data-name="use_end" bind:tap="onShowPopup">
+        <view class="section-content-label">结束时间</view>
+        <view class="section-content-value">
+          <view wx:if="{{coupon.use_end}}" class="section-content-value-text">
+            {{utils.formatTime(coupon.use_end)}}
+          </view>
+          <view wx:else class="section-content-value-text placeholder">点击设置结束使用时间</view>
+          <x-icon x-class="section-content-value-icon" name="arrow-right" size="28" color="#888"></x-icon>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+<view class="bottom">
+  <view bind:tap="handleConfirm" class="bottom-btn" style="{{custom.color ? 'background:'+custom.color : ''}}">
+    保存设置
+  </view>
+</view>
+<van-popup bind:click-overlay="onClosePopup" close-on-click-overlay show="{{ showPopup }}" position="bottom">
+  <van-datetime-picker title="{{currentTitle}}" bind:cancel="onClosePopup" bind:confirm="handlePopupConfirm" formatter="{{formatter}}" type="date" value="{{ currentValue }}" min-date="{{ minDate }}" max-date="{{ maxDate }}" bind:input="onInput" />
+</van-popup>

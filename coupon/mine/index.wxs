@@ -1,0 +1,69 @@
+var fixz = function fixz(num) {
+	if (num < 10) {
+		return '0' + num
+	}
+	return num
+}
+function bg(color = '#1989fa') {
+	return 'background:' + color
+}
+function text(color = '#1989fa') {
+	return 'color:' + color
+}
+function border(color = '#1989fa') {
+	return 'border-color:' + color + ';color:' + color
+}
+function has(name, list = []) {
+	return list.indexOf(name) > -1
+}
+function hasRemain(stock, total) {
+	stock = Number(stock)
+	total = Number(total)
+	if (total - stock < 0) {
+		return stock - total
+	} else {
+		return 0
+	}
+}
+function formatTime(date) {
+	date = +date
+	var date = getDate(date) //返回当前时间对象
+	var year = date.getFullYear()
+	var month = fixz(date.getMonth() + 1)
+	var day = fixz(date.getDate())
+
+	var hour = fixz(date.getHours())
+	var minute = fixz(date.getMinutes())
+	var second = '00'
+
+	// return [year, month, day].join('/') + ' ' + [hour, minute, second].join(':')
+	return [year, month, day].join('/')
+}
+function getCouponTime(active, begin, end, text = '领取') {
+	if (active == 1) {
+		if (begin && !end) {
+			return formatTime(begin) + ' 后方可' + text
+		} else if (!begin && end) {
+			return formatTime(end) + ' 后禁止' + text
+		} else if (!begin && !end) {
+			return '不限' + text + '时间'
+		} else {
+			if (formatTime(begin) == formatTime(end)) {
+				return formatTime(begin)
+			} else {
+				return formatTime(begin) + ' ~ ' + formatTime(end)
+			}
+		}
+	} else {
+		return '不限' + text + '时间'
+	}
+}
+module.exports = {
+	bg: bg,
+	text: text,
+	border: border,
+	has: has,
+	formatTime: formatTime,
+	getCouponTime: getCouponTime,
+	hasRemain: hasRemain,
+}

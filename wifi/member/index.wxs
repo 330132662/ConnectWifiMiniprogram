@@ -1,0 +1,16 @@
+function bg(color = '#1989fa') {
+	return 'background:' + color + ';color:#fff'
+}
+function text(color = '#1989fa') {
+	return 'color:' + color
+}
+var hidePhone = function (val) {
+	var phone = val.substring(0, 3) + '****' + val.substring(7)
+	return phone
+}
+
+module.exports = {
+	bg: bg,
+	text: text,
+	hidePhone: hidePhone,
+}

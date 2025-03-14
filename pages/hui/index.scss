@@ -1,0 +1,239 @@
+@import "../../assets/styles/index.scss";
+@import "../../assets/styles/animate.scss";
+
+$topHeight: calc(750rpx * 9 / 16);
+page {
+  padding-bottom: 130rpx;
+  padding-bottom: calc(
+    constant(safe-area-inset-bottom) + 130rpx
+  ); /*兼容 IOS<11.2*/
+  padding-bottom: calc(env(safe-area-inset-bottom) + 130rpx); /*兼容 IOS>11.2*/
+  background: $bg-color;
+}
+.top {
+  height: $topHeight;
+  &.ad {
+    min-height: $topHeight;
+    height: auto;
+  }
+  &-video {
+    width: 100%;
+    height: 100%;
+  }
+}
+.swiper {
+  height: 100%;
+  &-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.empty {
+      background: #f3f3f3;
+    }
+    &-banner {
+      width: 100%;
+      height: 100%;
+      &-image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &-empty {
+      color: #bbb;
+    }
+  }
+}
+.copyright {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  &-content {
+    height: 50rpx;
+  }
+}
+
+$iconSize: 115rpx;
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20rpx auto;
+  margin-top: 30rpx;
+  width: 690rpx;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 20rpx 0;
+  padding-bottom: 0;
+  border-radius: 10rpx;
+  box-shadow: $box-shadow-bottom;
+  &-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    flex-shrink: 0;
+    margin-bottom: 25rpx;
+    border-radius: 8rpx;
+    &-icon {
+      width: $iconSize;
+      height: $iconSize;
+      margin-bottom: 10rpx;
+      border-radius: 8rpx;
+      overflow: hidden;
+    }
+    &-name {
+      font-size: 27rpx;
+      font-weight: bold;
+      color: #222;
+      @include ellipsis();
+    }
+  }
+}
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 30rpx auto;
+  width: 690rpx;
+  $itemHeight: 100rpx;
+  &-item {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 20rpx;
+    width: 330rpx;
+    box-sizing: border-box;
+    border-radius: 10rpx;
+    box-shadow: $box-shadow-bottom;
+    &-left {
+      flex-shrink: 0;
+      width: $itemHeight;
+      height: $itemHeight;
+      &-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 10rpx;
+        overflow: hidden;
+      }
+    }
+    &-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding-left: 10rpx;
+      box-sizing: border-box;
+      flex: 1;
+      height: $itemHeight;
+    }
+    &-title {
+      font-size: 32rpx;
+      font-weight: bold;
+      color: #111;
+      @include ellipsis();
+    }
+    &-desc {
+      font-size: 23rpx;
+      color: #555;
+      transform: scaleY(1.1);
+      @include ellipsis();
+    }
+  }
+}
+.box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20rpx auto;
+  margin-top: 30rpx;
+  width: 690rpx;
+  &-banner {
+    width: 100%;
+    height: 300rpx;
+    &.movie {
+      height: 220rpx;
+    }
+    &-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 10rpx;
+      overflow: hidden;
+    }
+  }
+  &-item {
+    width: 220rpx;
+    height: 300rpx;
+    &-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 10rpx;
+      overflow: hidden;
+    }
+  }
+}
+.ul {
+  padding: 30rpx;
+  padding-top: 10rpx;
+  padding-bottom: 0;
+  &-loading {
+    padding: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .li {
+    width: 690rpx;
+    background: #fff;
+    box-shadow: $box-shadow-bottom;
+    border-radius: 10rpx;
+    overflow: hidden;
+    &:not(:last-child) {
+      margin-bottom: 35rpx;
+    }
+    &-image {
+      width: 100%;
+      min-height: 180rpx;
+    }
+    $iconSize: 80rpx;
+    &-bottom {
+      display: flex;
+      padding: 20rpx;
+      align-items: center;
+      &-left {
+        flex-shrink: 0;
+        &-icon {
+          width: $iconSize + 18;
+          height: $iconSize + 18;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+      }
+      &-m {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        height: $iconSize;
+        padding-left: 10rpx;
+        box-sizing: border-box;
+      }
+      &-title {
+        font-size: 32rpx;
+        font-weight: bold;
+        color: #111;
+        @include ellipsis();
+      }
+      &-desc {
+        font-size: 26rpx;
+        color: #666;
+        @include ellipsis();
+      }
+    }
+  }
+}

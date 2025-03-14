@@ -1,0 +1,22 @@
+<wxs src="./index.wxs" module="utils" />
+<view class="box">
+  <x-icon wx:if="{{tipType == 'info'}}" x-class="box-icon" name="warning" size="300" color="#ccc"></x-icon>
+  <x-icon wx:elif="{{tipType == 'success'}}" x-class="box-icon" name="success-o" size="300" color="#ccc"></x-icon>
+  <view class="box-text">{{tipText || '未知错误，请点击右上角重新刷新小程序'}}</view>
+</view>
+<view class="bottom">
+  <x-auth-btn wx:if="{{btnType == 'back'}}" bind:click="handleBack" mobile x-class="bottom-btn" style="{{utils.bg(custom.color)}}">
+    {{btnText}}
+  </x-auth-btn>
+  <x-auth-btn wx:elif="{{btnType == 'exit'}}" bind:click="handleExit" mobile x-class="bottom-btn" style="{{utils.bg(custom.color)}}">
+    {{btnText}}
+  </x-auth-btn>
+  <x-auth-btn wx:elif="{{btnType == 'copy'}}" bind:click="handleCopy" mobile x-class="bottom-btn" style="{{utils.bg(custom.color)}}">
+    {{btnText}}
+  </x-auth-btn>
+</view>
+<view wx:if="{{userInfo && custom.copyright_type == 'text' || custom.copyright_type == 'image'}}" class="copyright">
+  <x-divider type="{{custom.copyright_type}}" desc="{{custom.copyright_text}}" url="{{custom.copyright_url}}">
+    <image class="copyright-content" src="{{custom.copyright_image}}" mode="aspectFit"></image>
+  </x-divider>
+</view>

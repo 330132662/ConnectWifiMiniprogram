@@ -1,0 +1,95 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || loading}}"></x-loading>
+<view class="box">
+  <view class="box-title" bind:tap="handleSelectMerchant">
+    <view class="box-title-text">关联门店</view>
+    <view class="box-title-right">
+      <view wx:if="{{merchant.id}}" class="box-title-right-text">切换门店</view>
+      <view wx:else class="box-title-right-text">点击选择门店</view>
+      <x-icon x-class="box-title-right-icon" color="#aaa" size="29" name="arrow-right"></x-icon>
+    </view>
+  </view>
+  <view wx:if="{{merchant}}" class="box-form">
+    <view class="box-item start">
+      <view class="box-item-left">门店Logo</view>
+      <view class="box-item-right">
+        <view class="box-item-upload">
+          <x-image x-class="box-item-upload-image" src="{{merchant.logo}}" fit="aspectFill"></x-image>
+        </view>
+      </view>
+    </view>
+    <view class="box-item">
+      <view class="box-item-left">门店分类</view>
+      <view class="box-item-right">
+        <view class="box-item-right-text">{{merchant.gname || '-'}}</view>
+      </view>
+    </view>
+    <view class="box-item">
+      <view class="box-item-left">门店名称</view>
+      <view class="box-item-right">
+        <view class="box-item-right-text">{{merchant.name || '-'}}</view>
+      </view>
+    </view>
+    <view class="box-item">
+      <view class="box-item-left">营业备注</view>
+      <view class="box-item-right">
+        <view class="box-item-right-text">{{merchant.remark || '-'}}</view>
+      </view>
+    </view>
+  </view>
+  <van-empty wx:else description="当前WiFi还未关联门店"></van-empty>
+</view>
+<view wx:if="{{merchant}}" class="section">
+  <view class="section-title">
+    <view class="section-title-text">WiFi设置</view>
+  </view>
+  <view class="section-form">
+    <view class="section-form-item start">
+      <view class="section-form-item-left">
+        <view class="section-form-item-left-text">WiFi截流</view>
+      </view>
+      <view class="section-form-item-right">
+        <view class="section-form-item-right-field auto">
+          <textarea maxlength="-1" disable-default-padding auto-height cursor-spacing="50" always-embed data-name="dam_content" bindinput="onInputChange" class="section-form-item-right-input" placeholder="请输入截流内容，如：淘口令、拼多多砍价" value="{{wifi.dam_content}}"></textarea>
+          <view class="section-form-item-right-icon" wx:if="{{wifi.dam_content}}" data-name="dam_content" bind:tap="onClearClick">
+            <x-icon class="section-form-item-right-icon__icon" name="clear" size="32" color="#888"></x-icon>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="section-form-item">
+      <view class="section-form-item-left">
+        <view class="section-form-item-left-text">分享标题</view>
+      </view>
+      <view class="section-form-item-right">
+        <view class="section-form-item-right-field">
+          <input type="text" cursor-spacing="50" always-embed data-name="form_share_title" bindinput="onInputChange" class="section-form-item-right-input" placeholder="请输入小程序分享标题" value="{{wifi.form_share_title}}"></input>
+          <view class="section-form-item-right-icon" wx:if="{{wifi.form_share_title}}" data-name="form_share_title" bind:tap="onClearClick">
+            <x-icon class="section-form-item-right-icon__icon" name="clear" size="32" color="#888"></x-icon>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="section-form-item start">
+      <view class="section-form-item-left">
+        <view class="section-form-item-left-text">分享图片</view>
+      </view>
+      <view class="section-form-item-right">
+        <view wx:if="{{wifi.form_share_icon}}" class="section-form-item-right-image">
+          <image data-url="{{wifi.form_share_icon}}" class="section-form-item-right-image__image" mode="aspectFill" src="{{wifi.form_share_icon}}"></image>
+          <view data-name="form_share_icon" bind:tap="handleDeleteImage" class="section-form-item-right-image__tag">
+            <x-icon class="section-form-item-right-image__icon" name="delete" color="#fff" size="30"></x-icon>
+          </view>
+        </view>
+        <view wx:else data-name="form_share_icon" class="section-form-item-right-add" bind:tap="handleUpload">
+          <van-loading wx:if="{{disabled}}" type="spinner"></van-loading>
+          <x-icon wx:else class="section-form-item-right-add__icon" size="50" name="xiangji" color="#ccc"></x-icon>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="bottom" wx:if="{{wifi.mid}}">
+  <view class="bottom-btn" style="{{utils.bg(custom.color)}}" bind:tap="handleConfirm">保存</view>
+</view>
+<x-popup show="{{showPopupMerchant}}" bind:change="onPopupSelect" bind:close="onPopupClose"></x-popup>

@@ -1,0 +1,7 @@
+<van-tabbar custom-class="tabbar" active="{{ active }}" bind:change="onChange" active-color="{{ $.custom.color || '#555' }}" inactive-color="#ccc">
+  <van-tabbar-item class="tabbar-item" wx:for="{{ list }}" wx:key="key" data-item="{{ item }}">
+    <x-icon slot="icon" x-class="tabbar-item-icon" name="{{ item.icon }}" size="38"></x-icon>
+    <x-icon slot="icon-active" x-class="tabbar-item-icon active animated rubberBand" name="{{ item.icon }}" size="35"></x-icon>
+    <view class="tabbar-item-text {{ active == index ? 'active' : '' }}">{{ item.name }}</view>
+  </van-tabbar-item>
+</van-tabbar>

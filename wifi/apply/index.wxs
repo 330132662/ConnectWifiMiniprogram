@@ -1,0 +1,19 @@
+function bg(color = '#1989fa') {
+	return 'background:' + color + ';color:#fff'
+}
+function text(color = '#1989fa') {
+	return 'color:' + color
+}
+function filterAgent(id, list) {
+	return list[id - 1]
+}
+function border(color = '#1989fa') {
+	return 'border-color:' + color + ';color:' + color
+}
+
+module.exports = {
+	bg: bg,
+	text: text,
+	border: border,
+	filterAgent: filterAgent,
+}

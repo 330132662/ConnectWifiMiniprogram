@@ -1,0 +1,129 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading}}"></x-loading>
+<view class="top">
+  <block wx:if="{{!singlePage && custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video}}">
+    <x-ad x-class="top-ad" type="video" unitId="{{custom.form_ad.ad_video}}">
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{$.custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" image-class="swiper-item-banner-image" fit="cover" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <view wx:else class="top-ad-empty">
+        <view class="top-ad-empty-text">广告加载失败</view>
+      </view>
+    </x-ad>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'image'}}">
+    <swiper class="swiper" autoplay circular>
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" image-class="swiper-item-banner-image" fit="aspectFill" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <block wx:else>
+        <swiper-item class="swiper-item empty">
+          <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'video'}}">
+    <video wx:if="{{custom.video}}" class="top-video" muted="{{true}}" show-mute-btn="{{true}}" src="{{custom.video}}" autoplay binderror="onVideoError" loop show-fullscreen-btn="{{false}}" show-center-play-btn="{{false}}" enable-play-gesture="{{true}}" object-fit="cover"></video>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </block>
+  <view wx:else class="swiper">
+    <view wx:if="{{!userInfo.openid}}" class="swiper-item center">
+      <view class="swiper-item-empty">登录后可查看详情</view>
+    </view>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </view>
+</view>
+<view wx:if="{{userInfo}}" class="list">
+  <x-auth-btn wx:if="{{userInfo.created > 0}}" x-class="section" bind:click="handleManagerClick">
+    <view class="section-left">
+      <x-image x-class="section-left-image" src="{{userInfo.avatar}}" mode="aspectFill"></x-image>
+    </view>
+    <view class="section-right">
+      <view class="section-right-content">
+        <view class="section-right-content-title">{{userInfo.nickname || '点击登录'}}</view>
+        <view wx:if="{{userInfo.created > 0}}" class="section-right-content-desc">
+          您已创建了{{userInfo.created}}个WiFi码，点击管理
+        </view>
+      </view>
+      <view class="section-right-icon">
+        <x-icon name="arrow-right" color="#ccc"></x-icon>
+      </view>
+    </view>
+  </x-auth-btn>
+  <x-auth-btn wx:else x-class="section" bind:click="handleCreateWifi" mobile>
+    <view class="section-left">
+      <x-image wx:if="{{userInfo.avatar}}" x-class="section-left-image" src="{{userInfo.avatar}}" mode="aspectFill"></x-image>
+      <view wx:else class="section-left-icon" style="{{utils.bg(custom.color)}}">
+        <x-icon name="wifi" size="65" color="#fff"></x-icon>
+      </view>
+    </view>
+    <view class="section-right">
+      <view class="section-right-content">
+        <view class="section-right-content-title">创建WiFi码</view>
+        <view class="section-right-content-desc">一键连接·无需告知密码·安全防蹭网</view>
+      </view>
+      <view class="section-right-icon">
+        <x-icon name="arrow-right" color="#ccc"></x-icon>
+      </view>
+    </view>
+  </x-auth-btn>
+  <x-auth-btn x-class="section" bind:click="handleMerchant">
+    <view class="section-left">
+      <view class="section-left-icon" style="{{utils.bg(custom.color)}}">
+        <x-icon name="wifi" size="65" color="#fff"></x-icon>
+      </view>
+    </view>
+    <view class="section-right">
+      <view class="section-right-content">
+        <view class="section-right-content-title">门店管理</view>
+        <view class="section-right-content-desc">一键快速数字化管理我的门店</view>
+      </view>
+      <view class="section-right-icon">
+        <x-icon name="arrow-right" color="#ccc"></x-icon>
+      </view>
+    </view>
+  </x-auth-btn>
+  <x-auth-btn wx:if="{{userInfo.role_id == 1 || userInfo.role_id == 2}}" x-class="section" bind:click="handleInvite">
+    <view class="section-left">
+      <x-image x-class="section-left-image" src="{{$.custom.form_home.invite_icon || ''}}" fit="cover"></x-image>
+    </view>
+    <view class="section-right">
+      <view class="section-right-content">
+        <view class="section-right-content-title">{{$.custom.invite_title || '邀请入驻'}}</view>
+        <view class="section-right-content-desc">{{$.custom.invite_desc || '让更多的人帮您赚取佣金'}}</view>
+      </view>
+      <view class="section-right-icon">
+        <x-icon name="arrow-right" color="#ccc"></x-icon>
+      </view>
+    </view>
+  </x-auth-btn>
+  <x-auth-btn wx:if="{{userInfo.role_id == 1 || userInfo.role == 2}}" x-class="section" bind:click="handleMember">
+    <view class="section-left">
+      <x-image x-class="section-left-image" src="{{$.custom.manager_icon || ''}}" fit="cover"></x-image>
+    </view>
+    <view class="section-right">
+      <view class="section-right-content">
+        <view class="section-right-content-title">{{$.custom.manager_title || '查看我的团队成员'}}</view>
+        <view class="section-right-content-desc">{{$.custom.manager_desc || '让更多的人帮您赚取佣金'}}</view>
+      </view>
+      <view class="section-right-icon">
+        <x-icon name="arrow-right" color="#ccc"></x-icon>
+      </view>
+    </view>
+  </x-auth-btn>
+</view>
+<van-skeleton wx:else title avatar row="8" />
+<view wx:if="{{custom.copyright_type == 'text' || custom.copyright_type == 'image'}}" class="bottom">
+  <x-divider class="copyright" type="{{custom.copyright_type}}" desc="{{custom.copyright_text}}" url="{{custom.copyright_url}}">
+    <image class="copyright-content" src="{{custom.copyright_image}}" mode="aspectFit"></image>
+  </x-divider>
+</view>

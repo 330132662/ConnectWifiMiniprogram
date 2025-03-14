@@ -1,0 +1,12 @@
+{
+	"component": true,
+	"usingComponents": {
+		"van-popup": "../../../../libs/vant/popup/index",
+		"van-icon": "../../../../libs/vant/icon/index",
+		"van-empty": "../../../../libs/vant/empty/index",
+		"van-loading": "../../../../libs/vant/loading/index",
+		"x-image": "../../../../components/common/image/index",
+		"x-icon": "../../../../components/common/icon/index",
+		"x-divider": "../../../../components/common/divider/index"
+	}
+}

@@ -1,0 +1,4 @@
+<view bindtap='onCreate'>
+  <slot />
+</view>
+<x-poster-lib id="poster" bind:success="onCreateSuccess" bind:fail="onCreateFail" />

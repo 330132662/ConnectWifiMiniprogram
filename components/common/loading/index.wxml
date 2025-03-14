@@ -1,0 +1,8 @@
+<view wx:if="{{loader == 1}}" class="loader">
+  <view class="slack loader-1">
+    <view class="slack-dot slack-dot--a"></view>
+    <view class="slack-dot slack-dot--b"></view>
+    <view class="slack-dot slack-dot--c"></view>
+    <view class="slack-dot slack-dot--d"></view>
+  </view>
+</view>

@@ -1,0 +1,14 @@
+{
+  "navigationStyle": "default",
+  "navigationBarTitleText": "我的门店",
+  "usingComponents": {
+    "van-swipe-cell": "../../libs/vant/swipe-cell/index",
+    "van-loading": "../../libs/vant/loading/index",
+    "van-empty": "../../libs/vant/empty/index",
+    "van-tag": "../../libs/vant/tag/index",
+    "x-loading": "../../components/common/loading/index",
+    "x-image": "../../components/common/image/index",
+    "x-icon": "../../components/common/icon/index",
+    "x-auth-btn": "../../components/common/auth-btn/index"
+  }
+}

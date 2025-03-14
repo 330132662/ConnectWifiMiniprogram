@@ -1,0 +1,69 @@
+<wxs module="utils" src="./index.wxs"></wxs>
+<van-popup class="x-class popup" round show="{{ popupShow }}" position="bottom" custom-style="height: 80%;" bind:click-overlay="onPopupClose" bind:close="onPopupClose">
+  <view class="popup-top">
+    <view class="popup-head">
+      <view class="popup-head-title">历史记录</view>
+      <view class="popup-head-right" bind:tap="onPopupClose">
+        <x-icon x-class="popup-head-icon" name="cross-o"></x-icon>
+      </view>
+    </view>
+    <view class="popup-search">
+      <picker class="popup-search-picker" mode="date" value="{{begin}}" start="2022-05-01" end="2025-05-01" data-name="begin" bindchange="onDateChange">
+        <view class="popup-search-input">
+          <view class="popup-search-input-text {{begin ? '' : 'gray'}}">{{begin || '开始时间'}}</view>
+        </view>
+      </picker>
+      <view class="popup-search-input-slash">~</view>
+      <picker class="popup-search-picker" mode="date" value="{{end}}" start="2022-05-01" end="2025-05-01" data-name="end" bindchange="onDateChange">
+        <view class="popup-search-input">
+          <view class="popup-search-input-text {{end ? '' : 'gray'}}">{{end || '结束时间'}}</view>
+        </view>
+      </picker>
+      <view class="popup-search-confirm">
+        <view class="popup-search-confirm-btn" bind:tap="onSearch" style="{{utils.bg($.custom.color)}}">
+          搜索
+        </view>
+      </view>
+    </view>
+  </view>
+  <scroll-view show-scrollbar="{{false}}" class="popup-content" scroll-y bindscrolltolower="onScrollBottom">
+    <view class="item-gutter"></view>
+    <view wx:for="{{list}}" wx:key="index" class="item">
+      <view class="item-left">
+        <image class="item-left-avatar" mode="aspectFill" src="{{item.avatar}}"></image>
+      </view>
+      <view class="item-m">
+        <view class="item-line">
+          <view class="item-line-text strong">{{item.nickname || '微信用户'}}</view>
+          <view wx:if="{{prole == 1}}" class="item-line-text small">
+            帮您赚了{{utils.cash(item.tuan_cash)}}元
+          </view>
+          <view wx:elif="{{prole == 2}}" class="item-line-text small">
+            帮您赚了{{utils.cash(item.tuo_cash)}}元
+          </view>
+          <view wx:elif="{{prole == 3}}" class="item-line-text small">
+            帮您赚了{{utils.cash(item.shang_cash)}}元
+          </view>
+        </view>
+        <view class="item-cell">
+          <view class="item-cell-label">WiFi名称：</view>
+          <view class="item-cell-val flex">{{item.wifi_ssid}}</view>
+          <van-tag wx:if="{{item.wifi_role == 1}}" type="danger" size="mini">团长</van-tag>
+          <van-tag wx:elif="{{item.wifi_role == 2}}" type="primary" size="mini">拓展员</van-tag>
+          <van-tag wx:elif="{{item.wifi_role == 3}}" type="success" size="mini">商家</van-tag>
+        </view>
+        <view class="item-cell">
+          <view class="item-cell-label">连接时间：</view>
+          <view class="item-cell-val">{{utils.dateFormat(item.create_time * 1000)}}</view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{loading}}" class="loading">
+      <van-loading type="spinner" color="#888"></van-loading>
+    </view>
+    <block wx:elif="{{list && list.length}}">
+      <view wx:if="{{finished}}" class="divider">数据已加载完毕</view>
+    </block>
+    <van-empty wx:else description="该代理商暂无连接记录"></van-empty>
+  </scroll-view>
+</van-popup>

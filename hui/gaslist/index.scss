@@ -1,0 +1,130 @@
+@import '../../assets/styles/index.scss';
+@import '../../assets/styles/animate.scss';
+
+$searchHeight: 70rpx;
+page {
+	padding-bottom: 10rpx;
+	padding-bottom: calc(
+		constant(safe-area-inset-bottom) + 10rpx
+	); /*兼容 IOS<11.2*/
+	padding-bottom: calc(env(safe-area-inset-bottom) + 10rpx); /*兼容 IOS>11.2*/
+	background: $bg-color;
+}
+
+.ul {
+	padding: 20rpx 30rpx;
+	padding-top: 35rpx;
+	&-loading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-top: 20rpx;
+	}
+}
+.li {
+	width: 100%;
+	box-sizing: border-box;
+	background: #fff;
+	padding: 30rpx;
+	padding-top: 20rpx;
+	padding-bottom: 0;
+	box-shadow: $box-shadow-bottom;
+	border-radius: 10rpx;
+	&:not(:last-child) {
+		margin-bottom: 30rpx;
+	}
+	&-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 10rpx;
+		&-left {
+			display: flex;
+			align-items: center;
+			box-sizing: border-box;
+			padding-right: 5rpx;
+		}
+		&-right {
+			font-size: 26rpx;
+			color: #555;
+			flex-shrink: 0;
+			margin-bottom: -4rpx;
+		}
+		&-icon {
+			flex-shrink: 0;
+			width: 50rpx;
+			height: 50rpx;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+		&-title {
+			font-size: 38rpx;
+			color: #111;
+			font-weight: bold;
+			padding-left: 20rpx;
+			@include ellipsis();
+		}
+	}
+	&-line {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		&-item {
+			display: flex;
+			align-items: center;
+			flex: 1;
+			flex-shrink: 0;
+			&-icon {
+				color: #888;
+				margin-right: 10rpx;
+				font-size: 26rpx;
+			}
+		}
+		&-text {
+			font-size: 26rpx;
+			color: #888;
+			@include ellipsis();
+			&.red {
+				color: #e00;
+				font-weight: bold;
+			}
+			&.m {
+				font-size: 30rpx;
+				font-weight: bold;
+			}
+			&.strong {
+				font-size: 50rpx;
+				font-weight: bold;
+				margin-bottom: -8rpx;
+			}
+			&.origin {
+				margin-left: 10rpx;
+				margin-bottom: 2rpx;
+				text-decoration: line-through;
+			}
+		}
+		&-box {
+			display: flex;
+			align-items: flex-end;
+		}
+	}
+	&-bottom {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 90rpx;
+		padding-bottom: 5rpx;
+		&-btn {
+			letter-spacing: 2rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-sizing: border-box;
+			width: 180rpx;
+			height: 60rpx;
+			line-height: 1;
+			font-size: 27rpx;
+			border-radius: 5rpx;
+		}
+	}
+}

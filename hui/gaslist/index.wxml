@@ -1,0 +1,48 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || fullLoading}}"></x-loading>
+<view class="ul">
+  <view wx:for="{{list}}" wx:key="index" class="li">
+    <view class="li-head">
+      <view class="li-head-left">
+        <x-image x-class="li-head-icon" src="{{item.storeLogo}}"></x-image>
+        <view class="li-head-title">{{item.storeName}}</view>
+      </view>
+      <view class="li-head-right">{{item.itemInfoStrList}}</view>
+    </view>
+    <view class="li-line">
+      <view class="li-line-item" style="flex: 3;">
+        <view class="li-line-text" style="color:#555;">{{item.address}}</view>
+      </view>
+      <view class="li-line-item" style="justify-content:flex-end">
+        <x-icon class="li-line-item-icon" name="navigation"></x-icon>
+        <view class="li-line-text">{{utils.dis(item.distance)}}</view>
+      </view>
+    </view>
+    <view class="li-line" style="margin-top: 20rpx;align-items:flex-end">
+      <view class="li-line-box">
+        <view class="li-line-text m red">￥</view>
+        <view class="li-line-text red strong">{{utils.price(item.vipPrice)}}</view>
+        <view class="li-line-text m red" style="margin-left:10rpx">/ L</view>
+        <view class="li-line-text origin">油站价: ￥{{utils.price(item.storePrice)}}</view>
+      </view>
+      <view class="li-line-text">{{item.itemName}}</view>
+    </view>
+    <view class="li-bottom">
+      <view class="li-bottom-btn" style="{{utils.border(custom.color)}}" data-item="{{item}}" bind:tap="handle2Location">
+        一键导航
+      </view>
+      <view class="li-bottom-btn" style="{{utils.bg(custom.color)}}" data-item="{{item}}" bindtap="handle2Gas">
+        立即加油
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{loading}}" class="ul-loading">
+    <van-loading type="spinner"></van-loading>
+  </view>
+  <view wx:elif="{{!list.length}}" class="ul-empty">
+    <van-empty description="暂未找到附近优惠油站"></van-empty>
+  </view>
+  <view wx:elif="{{finished}}" class="ul-empty">
+    <x-divider desc="已全部加载完毕"></x-divider>
+  </view>
+</view>

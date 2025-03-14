@@ -1,0 +1,15 @@
+::-webkit-scrollbar {
+  width: 0 !important;
+  display: none !important;
+  height: 0 !important;
+  color: transparent !important;
+  background: transparent !important;
+  overflow: hidden;
+}
+.nav-left {
+  width: 100%;
+  height: 100%;
+}
+.birthday-box {
+  padding-bottom: 130rpx !important;
+}

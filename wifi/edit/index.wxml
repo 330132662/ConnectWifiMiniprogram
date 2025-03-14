@@ -1,0 +1,144 @@
+<wxs src="./index.wxs" module="utils" />
+<x-loading wx:if="{{customLoading || loading}}"></x-loading>
+<view class="top {{custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video ? 'ad' : ''}}">
+  <block wx:if="{{!singlePage && custom.form_ad.ad_video_active==1 && custom.form_ad.ad_video}}">
+    <x-ad x-class="top-ad" type="video" unitId="{{custom.form_ad.ad_video}}">
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{$.custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" image-class="swiper-item-banner-image" fit="cover" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <view wx:else class="top-ad-empty">
+        <view class="top-ad-empty-text">广告加载失败</view>
+      </view>
+    </x-ad>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'image'}}">
+    <swiper class="swiper" autoplay circular>
+      <block wx:if="{{custom.banners && custom.banners.length}}">
+        <swiper-item wx:for="{{custom.banners}}" wx:key="index" class="swiper-item" data-item="{{item}}" bind:tap="handleBannerItemClick">
+          <x-image x-class="swiper-item-banner" image-class="swiper-item-banner-image" fit="aspectFill" src="{{item.src}}"></x-image>
+        </swiper-item>
+      </block>
+      <block wx:else>
+        <swiper-item class="swiper-item empty">
+          <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </block>
+  <block wx:elif="{{custom.banner_type == 'video'}}">
+    <video wx:if="{{custom.video}}" unit-id="{{custom.form_ad.ad_tiepian || ''}}" class="top-video" muted="{{true}}" show-mute-btn="{{true}}" src="{{custom.video}}" autoplay binderror="onVideoError" loop show-fullscreen-btn="{{false}}" show-center-play-btn="{{false}}" enable-play-gesture="{{true}}" object-fit="cover"></video>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </block>
+  <view wx:else class="swiper">
+    <view wx:if="{{!userInfo.openid}}" class="swiper-item center">
+      <view class="swiper-item-empty">登录后可查看详情</view>
+    </view>
+    <view wx:else class="swiper-item">
+      <view class="swiper-item-empty">暂未设置广告或轮播图</view>
+    </view>
+  </view>
+</view>
+<view class="title">
+  <view class="title-item">
+    <x-icon class="title-item-icon" name="wifi" size="27" color="#aaa"></x-icon>
+    <text class="title-item-text">一键快速连接</text>
+  </view>
+  <view class="title-item">
+    <x-icon class="title-item-icon" name="password" size="27" color="#aaa"></x-icon>
+    <text class="title-item-text">无需告知密码</text>
+  </view>
+  <view class="title-item">
+    <x-icon class="title-item-icon" name="safe" size="27" color="#aaa"></x-icon>
+    <text class="title-item-text">安全防蹭网</text>
+  </view>
+</view>
+<view class="form">
+  <view class="form-item upload">
+    <view class="form-item-label upload">品牌Logo</view>
+    <view class="form-item-content upload">
+      <view wx:if="{{wifi.form_logo}}" class="form-item-upload">
+        <image data-url="{{wifi.form_logo}}" bind:tap="handlePreviewImage" class="form-item-upload-image" mode="aspectFill" src="{{wifi.form_logo}}"></image>
+        <view data-name="form_logo" bind:tap="handleDeleteImage" class="form-item-upload-image__tag">
+          <x-icon x-class="form-item-upload-image__icon" name="delete" size="30"></x-icon>
+        </view>
+      </view>
+      <view wx:else class="form-item-upload add" data-name="form_logo" bind:tap="handleUpload">
+        <van-loading wx:if="{{disabled}}" type="spinner"></van-loading>
+        <x-icon wx:else x-class="form-item-upload-add" name="xiangji" color="#ccc" size="55"></x-icon>
+      </view>
+    </view>
+  </view>
+  <view class="form-item">
+    <view class="form-item-label">品牌名称</view>
+    <view class="form-item-content">
+      <input type="text" cursor-spacing="50" always-embed data-name="form_title" bindinput="onInputChange" class="form-item-input" placeholder="如：商标/设备/店铺名称" placeholder-class="form-item-placeholder" value="{{wifi.form_title}}"></input>
+      <view class="form-item-right" wx:if="{{wifi.form_title}}" data-name="form_title" bind:tap="onClearClick">
+        <x-icon class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+      </view>
+    </view>
+  </view>
+  <view class="form-item textarea">
+    <view class="form-item-label textarea">品牌描述</view>
+    <view class="form-item-content textarea">
+      <textarea style="{{platform=='ios' ? 'margin-left:-5px' : ''}}" auto-height maxlength="512" cursor-spacing="50" always-embed data-name="form_desc" bindinput="onInputChange" class="form-item-input textarea" placeholder="如：商标/设备/店铺简介或描述" value="{{wifi.form_desc}}"></textarea>
+      <view class="form-item-right" wx:if="{{wifi.form_desc}}" data-name="form_desc" bind:tap="onClearClick">
+        <x-icon class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+      </view>
+    </view>
+  </view>
+  <view class="form-item">
+    <view class="form-item-label">绑定地址</view>
+    <view class="form-item-content">
+      <input type="text" wx:if="{{!wifi.address || !wifi.longitude || !wifi.latitude}}" catch:tap="handleSelectLocation" disabled class="form-item-input" placeholder="绑定位置，用于附近WiFi展示" placeholder-class="form-item-placeholder" value="{{wifi.address}}"></input>
+      <input type="text" wx:else data-name="address" bind:input="onInputChange" class="form-item-input" placeholder="请输入WiFi绑定的详细地址" placeholder-class="form-item-placeholder" value="{{wifi.address}}"></input>
+      <view class="form-item-right" data-name="address" wx:if="{{wifi.address}}" catch:tap="onClearClick">
+        <x-icon class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+      </view>
+      <view wx:else class="form-item-right" bind:tap="handleSelectLocation" data-name="address">
+        <x-icon class="form-item-right__icon" name="locate" size="32" color="#888"></x-icon>
+      </view>
+    </view>
+  </view>
+  <view class="form-item">
+    <view class="form-item-label">WiFi名称</view>
+    <view class="form-item-content">
+      <input type="text" cursor-spacing="50" always-embed data-name="ssid" bindinput="onInputChange" class="form-item-input" placeholder="请填写WiFi名称" placeholder-class="form-item-placeholder" value="{{wifi.ssid}}"></input>
+      <view wx:if="{{wifi.ssid}}" class="form-item-right" data-name="ssid" bind:tap="onClearClick">
+        <x-icon class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+      </view>
+      <view wx:else class="form-item-right" data-name="ssid" bind:tap="onSearchWifiClick">
+        <x-icon class="form-item-right__icon" name="search" size="32" color="#888"></x-icon>
+      </view>
+    </view>
+  </view>
+  <view class="form-item">
+    <view class="form-item-label">WiFi密码</view>
+    <view class="form-item-content">
+      <input type="text" cursor-spacing="50" always-embed data-name="password" bindinput="onInputChange" class="form-item-input" placeholder="请填写WiFi密码" placeholder-class="form-item-placeholder" value="{{wifi.password}}"></input>
+      <view class="form-item-right" wx:if="{{wifi.password}}" data-name="password" bind:tap="onClearClick">
+        <x-icon class="form-item-right__icon" name="clear" size="32" color="#bbb"></x-icon>
+      </view>
+    </view>
+  </view>
+  <view class="form-item">
+    <view class="form-item-tip">
+      <x-icon class="form-item-tip-icon" name="safe-2" size="29" style="{{utils.text(custom.color)}}"></x-icon>
+      <view class="form-item-tip-text" style="{{utils.text(custom.color)}}">WiFi密码不会被共享，请放心填写</view>
+    </view>
+  </view>
+</view>
+<view class="auth">
+  <x-auth-btn x-class="auth-btn" mobile style="{{utils.bg(custom.color)}}" bind:click="handleConfirm">
+    {{wifi.uid ? '保 存' : '一键生成WiFi码'}}
+  </x-auth-btn>
+</view>
+<!-- 版权声明 -->
+<view wx:if="{{custom.copyright_type == 'text' || custom.copyright_type == 'image'}}" class="bottom">
+  <x-divider class="copyright" type="{{custom.copyright_type}}" desc="{{custom.copyright_text}}" url="{{custom.copyright_url}}">
+    <image class="copyright-content" src="{{custom.copyright_image}}" mode="aspectFit"></image>
+  </x-divider>
+</view>

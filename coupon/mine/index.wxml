@@ -1,0 +1,84 @@
+<wxs src="./index.wxs" module="utils" />
+<van-tabs sticky active="{{status}}" color="{{custom.color}}" disabled="{{loading}}" bind:change="onTabChange">
+  <van-tab title="待核销" custom-class="list">
+    <view class="item" wx:for="{{list}}" wx:key="index">
+      <view class="item-bg"></view>
+      <view class="item-left">
+        <view class="item-name">{{item.name}}</view>
+        <view class="item-desc">{{item.desc}}</view>
+        <view class="item-bottom">
+          <view class="item-bottom-tip">领取时间：{{item.create_time}}</view>
+          <view class="item-bottom-tip">
+            使用时间：{{utils.getCouponTime(item.use_active, item.use_begin,item.use_end,'使用')}}
+          </view>
+        </view>
+      </view>
+      <view class="item-right" data-item="{{item}}" bind:tap="showCode">
+        <view class="item-right-btn">立即核销</view>
+      </view>
+    </view>
+    <view wx:if="{{loading}}" class="loading">
+      <van-loading type="spinner"></van-loading>
+    </view>
+    <view wx:elif="{{!list || !list.length}}" class="empty">
+      <van-empty description="暂无数据"></van-empty>
+    </view>
+    <view wx:else class="empty">
+      <x-divider wx:if="{{finished}}" desc="已全部加载完毕">已全部加载完毕</x-divider>
+    </view>
+  </van-tab>
+  <van-tab title="已核销" custom-class="list">
+    <view class="item" wx:for="{{list}}" wx:key="index">
+      <view class="item-bg"></view>
+      <view class="item-left">
+        <view class="item-name">{{item.name}}</view>
+        <view class="item-desc">{{item.desc}}</view>
+        <view class="item-bottom">
+          <view class="item-bottom-tip">领取时间：{{item.create_time}}</view>
+          <view class="item-bottom-tip">核销时间：{{item.checked_time || '-'}}</view>
+        </view>
+      </view>
+      <view class="item-right">
+        <view class="item-right-btn" style="opacity:0.5">已核销</view>
+      </view>
+    </view>
+    <view wx:if="{{loading}}" class="loading">
+      <van-loading type="spinner"></van-loading>
+    </view>
+    <view wx:elif="{{!list || !list.length}}" class="empty">
+      <van-empty description="暂无数据"></van-empty>
+    </view>
+  </van-tab>
+  <van-tab title="已过期" custom-class="list">
+    <view class="item" wx:for="{{list}}" wx:key="index">
+      <view class="item-bg"></view>
+      <view class="item-left">
+        <view class="item-name">{{item.name}}</view>
+        <view class="item-desc">{{item.desc}}</view>
+        <view class="item-bottom">
+          <view class="item-bottom-tip">领取时间：{{item.create_time}}</view>
+          <view class="item-bottom-tip">
+            使用时间：{{utils.getCouponTime(item.use_active, item.use_begin,item.use_end,'使用')}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{loading}}" class="loading">
+      <van-loading type="spinner"></van-loading>
+    </view>
+    <view wx:elif="{{!list || !list.length}}" class="empty">
+      <van-empty description="暂无数据"></van-empty>
+    </view>
+  </van-tab>
+</van-tabs>
+<van-popup custom-class="popup" show="{{showPopup}}" bind:click-overlay="closePopup">
+  <view class="popup-head">
+    <view class="popup-head-title">核销码</view>
+  </view>
+  <view class="popup-content">
+    <x-image width="450rpx" height="450rpx" class="popup-content-image" src="{{popupData.code}}"></x-image>
+  </view>
+  <view class="popup-bottom">
+    <view class="popup-bottom-text">请向管理员出示核销码</view>
+  </view>
+</van-popup>
